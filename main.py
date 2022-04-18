@@ -125,11 +125,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.statusbar.showMessage("Turn servo off...")
 
     def start_conveyor(self):
-        self.thread1.r.Conveyor()
+        # self.thread1.r.Conveyor()
         if (self.conveyor):
+            self.thread1.r.writeByte(2, 0)
             self.conveyor = False
             self.startConveyor_btn.setText("Start Conveyor")
         else:
+            self.thread1.r.writeByte(2, 1)
             self.conveyor = True
             self.startConveyor_btn.setText("Stop Conveyor")
 
@@ -320,6 +322,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.iouSlider.setProperty("value", 45)
         
         self.statusbar.showMessage("Changed model...")
+
 
 
     def show_fps(self, fps):

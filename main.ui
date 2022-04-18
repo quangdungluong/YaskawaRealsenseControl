@@ -1267,7 +1267,7 @@
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>331</width>
+         <width>395</width>
          <height>61</height>
         </rect>
        </property>
@@ -1735,30 +1735,6 @@ selection-backgound-color: #282828;
         <string>FORWARD</string>
        </property>
       </widget>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="tab">
-     <attribute name="title">
-      <string>Machine Controller</string>
-     </attribute>
-     <widget class="QPushButton" name="startConveyor_btn">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>40</y>
-        <width>141</width>
-        <height>28</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Cambria</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Start Conveyor</string>
-      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="autoTab">
@@ -2407,6 +2383,19 @@ selection-backgound-color: #282828;
          <widget class="QPushButton" name="stopAuto_btn">
           <property name="text">
            <string>Stop Auto</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="startConveyor_btn">
+          <property name="font">
+           <font>
+            <family>Cambria</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Start Conveyor</string>
           </property>
          </widget>
         </item>

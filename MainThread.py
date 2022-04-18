@@ -30,6 +30,9 @@ class Main_loop(QThread):
         self.Y = ["100", "70", "-100", "-70", "0"]
         self.Z = ["-50", "-60", "50", "100"]
 
+        ## Reset conveyor
+        self.r.writeByte(2, 0)
+
     def robot_home(self):
         while(self.cam_flag):
             if (self.go_home):
@@ -40,39 +43,55 @@ class Main_loop(QThread):
 
     def run(self):
         # self.cam_flag = True
+        self.r.writeByte(1, 0)
+        self.r.writeByte(5, 0)
+        # self.r.writeByte(2, 0)
+        self.r.mainJob()
         self.auto_run = True
         self.r.servoON()
         while(self.cam_flag and self.auto_run):
-            if (self.picking):
+            if (self.picking and len(self.XYZ_obj) > 0):
                 try:
                     # Get object position and destination position
                     x, y, z = self.XYZ_obj[0]['center_x'], self.XYZ_obj[0]['center_y'], self.XYZ_obj[0]['height']
                     dest_x, dest_y, dest_z = "-11.53", "-258.413", "-34.826"
                     self.XYZ_obj.pop(0)
                     print(x, y, z)
-
-                    self.r.v_r = 700
-                    self.send_msg.emit("Picking object...")
-                    # self.r.CheckToolOn()
-                    self.r.Write_Robot_XYZ(x, y, z)
-                    # self.send_pos.emit(np.array(self.r.pos_robot(self.r.Read_Robot_XYZ())))
-
-                    self.r.v_r = 1000
-                    self.send_msg.emit("Placing object...")
-                    self.r.Write_Robot_XYZ(xc, yc, zc)
-                    # self.send_pos.emit(np.array(self.r.pos_robot(self.r.Read_Robot_XYZ())))
-
-                    self.r.v_r = 700
-                    self.r.Write_Robot_XYZ(dest_x, dest_y, dest_z)
-                    # self.r.CheckToolOff()
-                    # self.send_pos.emit(np.array(self.r.pos_robot(self.r.Read_Robot_XYZ())))
                     
-                    self.r.v_r = 1000
-                    self.r.Write_Robot_XYZ(xc, yc, zc)
-                    # self.send_pos.emit(np.array(self.r.pos_robot(self.r.Read_Robot_XYZ())))
+                    self.r.writePos(30, x, y, z)
+                    self.r.writePos(36, dest_x, dest_y, dest_z)
+                    self.r.writeByte(5, 1)
+                    self.r.writeByte(5, 0)
+                    # self.r.v_r = 700
+                    # self.send_msg.emit("Picking object...")
+                    # self.r.CheckToolOn()
+                    # # self.r.turnOnTool()
+                    # self.r.Write_Robot_XYZ(x, y, z)
+                    # # self.send_pos.emit(np.array(self.r.pos_robot(self.r.Read_Robot_XYZ())))
+
+                    # self.r.v_r = 1000
+                    # self.send_msg.emit("Placing object...")
+                    # self.r.Write_Robot_XYZ(str((float(dest_x)+float(x))/2), str((float(dest_y)+float(y))/2), "-10")
+                    # # self.send_pos.emit(np.array(self.r.pos_robot(self.r.Read_Robot_XYZ())))
+
+                    # self.r.v_r = 700
+                    # self.r.Write_Robot_XYZ(dest_x, dest_y, dest_z)
+                    # # self.r.turnOffTool()
+                    # self.r.CheckToolOff()
+                    # # self.send_pos.emit(np.array(self.r.pos_robot(self.r.Read_Robot_XYZ())))
+                    
+                    # self.r.v_r = 1000
+                    # self.r.Write_Robot_XYZ(xc, yc, "-10")
+                    # # self.send_pos.emit(np.array(self.r.pos_robot(self.r.Read_Robot_XYZ())))
+                    
+                    ## Write Pos1 and turn flag to 1
+
+                    ## Write Pos2 and turn flag to 2
+
 
                     self.picking = False
                     self.send_msg.emit("Done...")
+
                 except:
                     pass
             else:
@@ -104,7 +123,7 @@ class Main_loop(QThread):
             color_image = np.asanyarray(color_frame.get_data())
             self.camera.result, self.XYZ_obj = self.camera.process(color_image, depth_frame)
             
-            if (not self.picking) and (self.XYZ_obj != None):
+            if (not self.picking) and (self.XYZ_obj):
                 self.picking = True
 
             self.change_pixmap_signal.emit(self.camera.result)
