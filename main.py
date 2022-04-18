@@ -6,10 +6,12 @@ import time
 import numpy as np
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QImage, QPixmap
-from PyQt5.QtWidgets import QApplication, QMainWindow, QAction, QMessageBox, QTableWidgetItem
+from PyQt5.QtWidgets import (QAction, QApplication, QMainWindow, QMessageBox,
+                             QTableWidgetItem)
 
 from main_ui import Ui_MainWindow
 from MainThread import *
+
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -21,6 +23,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.update_image(np.zeros([self.display_height, self.display_width, 3], dtype=np.uint8))
         self.fps_box.setChecked(True)
         self.detect_box.setChecked(True)
+
         self.servo = False
         self.conveyor = False
         self.thread1 = Main_loop()
@@ -125,7 +128,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.statusbar.showMessage("Turn servo off...")
 
     def start_conveyor(self):
-        # self.thread1.r.Conveyor()
         if (self.conveyor):
             self.thread1.r.writeByte(2, 0)
             self.conveyor = False
@@ -288,6 +290,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.thread1.wait(500)
             self.thread1.cam_flag = False
             self.thread1.camera.pipeline.stop()
+            time.sleep(1)
             self.update_image(np.zeros([480,640,3],dtype=np.uint8))
             self.statusbar.showMessage("Stop capture...")
 

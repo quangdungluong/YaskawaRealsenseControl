@@ -35,12 +35,15 @@ class CameraControl:
 
     
     def process(self, color_image, depth_frame):
+        """
+        Process image and extract real world coordinate of objects
+        """
         self.result_dict = []
         start_time = time.time()
         if (self.detect_flag):
             image = color_image
             pred = self.model(image)
-            json = pred.pandas().xyxy[0].sort_values('xmax', ascending=False).to_dict(orient="records") # sort right - to
+            json = pred.pandas().xyxy[0].sort_values('xmax', ascending=False).to_dict(orient="records") # sort right -> left
             for row in json:
                 d = dict()
                 center_x = (row['xmin'] + row['xmax'])/2
@@ -51,7 +54,8 @@ class CameraControl:
 
                 ## TEMPORARY ##
                 d['height'] = "-60"
-                self.result_dict.append(d)              
+                ###############
+                self.result_dict.append(d)        
 
             result = pred.render()[0]
             self.fps = f"{1/(time.time() - start_time):.0f}"

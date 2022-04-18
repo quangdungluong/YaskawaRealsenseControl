@@ -1,7 +1,5 @@
 import socket
 import time
-import numpy as np
-from dataclasses import dataclass
 
 class RobotControl:
     def __init__(self, udp_ip="192.168.1.14", udp_port=10040):
@@ -9,7 +7,7 @@ class RobotControl:
         self.UDP_PORT = udp_port
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.sock.settimeout(5)
-        self.x_c = 185.0000         ### current pos
+        self.x_c = 185.0000         ### Home position
         self.y_c = 0.0000
         self.z_c = 125.0000
         self.r_x = 180.0000         ### current orientation
@@ -17,11 +15,19 @@ class RobotControl:
         self.r_z = 0.0000
         self.v_r = 700             ### Velocity of robot moving
 
+
     def mainSelect(self):
+        """
+        Select the main job
+        """
         data = b'YERC \x00$\x00\x03\x01\x00\x03\x00\x00\x00\x0099999999\x87\x00\x01\x00\x00\x02\x00\x00DUNG-TRUNG\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
         self.sock.sendto(data, (self.UDP_IP, self.UDP_PORT))
 
+
     def mainJob(self):
+        """
+        Start the main job
+        """
         self.mainSelect()
         time.sleep(0.1)
         data = bytes.fromhex(
@@ -29,7 +35,11 @@ class RobotControl:
             '86 00 01 00 01 10 00 00 01 00 00 00')
         self.sock.sendto(data, (self.UDP_IP, self.UDP_PORT))
 
+
     def writeByte(self, index, value):
+        """
+        Write value to byte
+        """
         data = bytes.fromhex('59 45 52 43 20 00 01 00 03 01 00 0F 00 00 00 00 39 39 39 39 39 39 39 39 7A 00')
         instance = self.to_hex16(index)
         behind = bytes.fromhex('01 10 00 00 00')
@@ -40,6 +50,7 @@ class RobotControl:
         data = data + instance + behind
         self.sock.sendto(data, (self.UDP_IP, self.UDP_PORT))
         time.sleep(0.1)
+
 
     def writePos(self, index, x_d, y_d, z_d, rx = "180.000", ry = "0.0000", rz = "0.0000"):
         """
@@ -65,9 +76,8 @@ class RobotControl:
         extended_figure = self.to_hex32(0)
         seventh = self.to_hex32(0)
         eighth = self.to_hex32(0)
-        datas = data + instance + behind + data_type + figure + tool + coord + extended_figure + xhex + yhex + zhex + rxhex + ryhex + rzhex + seventh + eighth
-        # print(datas)
-        self.sock.sendto(datas, (self.UDP_IP, self.UDP_PORT))
+        data = data + instance + behind + data_type + figure + tool + coord + extended_figure + xhex + yhex + zhex + rxhex + ryhex + rzhex + seventh + eighth
+        self.sock.sendto(data, (self.UDP_IP, self.UDP_PORT))
 
 
     def servoON(self):  # ID=00 00 after 03 01
@@ -129,17 +139,6 @@ class RobotControl:
         time.sleep(0.1)
         return data
 
-    def Conveyor(self):
-        self.ConveyorSelect()
-        time.sleep(0.1)
-        data = bytes.fromhex(
-            '59 45 52 43 20 00 04 00 03 01 00 07 00 00 00 00 39 39 39 39 39 39 39 39 '
-            '86 00 01 00 01 10 00 00 01 00 00 00')
-        self.sock.sendto(data, (self.UDP_IP, self.UDP_PORT))
-
-    def ConveyorSelect(self):
-        data = b'YERC \x00$\x00\x03\x01\x00\x03\x00\x00\x00\x0099999999\x87\x00\x01\x00\x00\x02\x00\x00CONV\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
-        self.sock.sendto(data, (self.UDP_IP, self.UDP_PORT))
 
     def ToolStart(self):  # ID = 00 07
         """
@@ -162,6 +161,7 @@ class RobotControl:
             '00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00')
         self.sock.sendto(data, (self.UDP_IP, self.UDP_PORT))
 
+
     def Check_Pos(self, x_d, y_d, z_d):
         data = self.Read_Robot_XYZ()
         n = len(data)
@@ -175,6 +175,7 @@ class RobotControl:
             a = 1
         return a
 
+
     def Read_Robot_XYZ(self):  # ID = 00 02
         """
         b'YERC \x00\x00\x00\x03\x01\x00\x02\x00\x00\x00\x0099999999u\x00e\x00\x00\x01\x00\x00'
@@ -187,6 +188,7 @@ class RobotControl:
         data = list(data)
         time.sleep(0.1)
         return data
+
 
     def pos_robot(self, data):
         try:
@@ -205,6 +207,7 @@ class RobotControl:
         except:
             x, y, z, rx, ry, rz = -1, -1, -1, -1, -1, -1
         return x, y, z, rx, ry, rz
+
 
     def Write_Robot_XYZ(self, x_d, y_d, z_d, rx = "180.000", ry = "0.0000", rz = "0.0000"): # ID = 00 04
         data = bytes.fromhex(
@@ -240,12 +243,14 @@ class RobotControl:
             re = re - 16 ** 8
         return re
 
+
     def compare_pos(self, xc, yc, zc, x, y, z):
         xg, yg, zg, rxg, ryg, rzg = self.char2int(xc, yc, zc, 0, 0, 0)
         if abs(xg - x) < 100 and abs(yg - y) < 100 and abs(zg - z) < 100:
             return 0
         else:
             return 1
+
 
     def char2int(self, x, y, z, rx, ry, rz):
         x = int(float(x) * 1000)
@@ -255,6 +260,7 @@ class RobotControl:
         ry = int(float(ry) * 10000)
         rz = int(float(rz) * 10000)
         return x, y, z, rx, ry, rz
+
 
     def to_hex32(self, z):
         if z < 0:
@@ -269,6 +275,7 @@ class RobotControl:
         bv = bytes(v1)
         return bv
 
+
     def to_hex16(self, z):
         if z < 0:
             z = z + 16 ** 8
@@ -278,6 +285,16 @@ class RobotControl:
         v1 = [z2, z1]
         bv = bytes(v1)
         return bv
+
+    def to_hex8(self, z):
+        if z < 0:
+            z = z + 16 ** 8
+        z1 = int(z / (16 ** 2))
+        ztem = z - z1 * (16 ** 6)
+        z2 = ztem - z1 * (16 ** 2)
+        v1 = [z2]
+        bv = bytes(v1)
+        return bv   
 
 z_inc = 4.0000
 # Home position 1
