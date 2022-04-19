@@ -24,7 +24,7 @@ class CameraControl:
         self.config.enable_stream(rs.stream.color, 640, 480, rs.format.rgb8, 30)                                                         
         align_to = rs.stream.color
         self.align = rs.align(align_to)
-        self.intrs = None          
+        self.cam_intrinsic = None          
 
     def stop(self):
         """Sets run flag to False and waits for thread to finish"""
@@ -53,7 +53,7 @@ class CameraControl:
                 d['center_x'], d['center_y'], d['height'] = self.convert_to_realworld(center_x, center_y, center_z)
 
                 ## TEMPORARY ##
-                d['height'] = "-60"
+                d['height'] = "-61"
                 ###############
                 self.result_dict.append(d)        
 
@@ -66,14 +66,14 @@ class CameraControl:
         return result, self.result_dict
 
     def convert_to_realworld(self, x, y, z):
-        x, y, z = rs.rs2_deproject_pixel_to_point(self.intrs, [x, y], z)
+        x, y, z = rs.rs2_deproject_pixel_to_point(self.cam_intrinsic, [x, y], z)
         coord_mat = [[x], [y], [z], [1]]
-        calib_mat = [[-0.03796503641,  0.9987888303,  -0.03129741865,  0.3244525494],
+        calibration_mat = [[-0.03796503641,  0.9987888303,  -0.03129741865,  0.3244525494],
                     [0.9992437674,  0.03768181288,  -0.009590318112,  -0.1112181919],
                     [-0.008399359137,  -0.0316378473,  -0.9994641051,  0.3920535757],
                     [0,  0,  0,  1]]
 
-        a = np.dot(calib_mat, coord_mat)
+        a = np.dot(calibration_mat, coord_mat)
         # convert to mm
         a[2][0] = -0.062
         return str(a[0][0]*1000), str(a[1][0]*1000), str(a[2][0]*1000)
