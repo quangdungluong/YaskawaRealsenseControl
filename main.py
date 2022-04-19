@@ -24,23 +24,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.fps_box.setChecked(True)
         self.detect_box.setChecked(True)
 
-        self.servo = False
         self.conveyor = False
         self.thread1 = Main_loop()
 
         ## Connection and Basic Control button
         self.connect_btn.clicked.connect(self.connect)
-        self.start_btn.clicked.connect(self.start)
+        self.start_btn.clicked.connect(self.start_manual)
+        self.stop_btn.clicked.connect(self.stop_manual)
         self.servoOn_btn.clicked.connect(self.servo_on)
         self.home_btn.clicked.connect(self.go_home)
-        self.stop_btn.clicked.connect(self.stop)
+        self.toolOn_btn.clicked.connect(self.tool_on)
+
         ## Machine Controller button
         self.startConveyor_btn.clicked.connect(self.start_conveyor)
 
         ## Manual Position button
         self.getPos_btn.clicked.connect(self.get_position)
         self.setPos_btn.clicked.connect(self.set_position)
-        self.setDefault_btn.clicked.connect(self.set_default)
+        self.setDefault_btn.clicked.connect(self.set_default_position)
 
         ## Incremental Position
         self.speed_spin.valueChanged.connect(lambda x: self.change_speed(x, 'speed_spin'))
@@ -62,15 +63,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.startCam_btn.clicked.connect(self.start_capture)
         self.stopCam_btn.clicked.connect(self.stop_capture)
         self.detect_box.clicked.connect(self.detect)
+
         ## Auto button
         self.startAuto_btn.clicked.connect(self.start_auto)
         self.stopAuto_btn.clicked.connect(self.stop_auto)
 
         ## Adjust Confidence and IoU Threshold
-        self.confSpinBox.valueChanged.connect(lambda x: self.changeCam_value(x, 'confSpinBox'))
-        self.confSlider.valueChanged.connect(lambda x: self.changeCam_value(x, 'confSlider'))
-        self.iouSpinBox.valueChanged.connect(lambda x: self.changeCam_value(x, 'iouSpinBox'))
-        self.iouSlider.valueChanged.connect(lambda x: self.changeCam_value(x, 'iouSlider'))
+        self.confSpinBox.valueChanged.connect(lambda x: self.changeCam_config(x, 'confSpinBox'))
+        self.confSlider.valueChanged.connect(lambda x: self.changeCam_config(x, 'confSlider'))
+        self.iouSpinBox.valueChanged.connect(lambda x: self.changeCam_config(x, 'iouSpinBox'))
+        self.iouSlider.valueChanged.connect(lambda x: self.changeCam_config(x, 'iouSlider'))
 
         ## Choose model
         self.comboBox.clear()
@@ -85,57 +87,61 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         quit.triggered.connect(self.closeEvent)
 
         ## Get teaching point
-        self.btnTeaching.clicked.connect(self.teaching)
-        self.btnClearData.clicked.connect(self.clear)
-        self.btnForward.clicked.connect(self.forward)
+        self.btnTeaching.clicked.connect(self.teaching_point)
+        self.btnClearData.clicked.connect(self.clear_point)
+        self.btnForward.clicked.connect(self.forward_point)
 
     ################################################################
     ##########  Connection, Basic and Machine Controller   #########
     ################################################################
 
     def connect(self):
+        self.statusbar.showMessage("Connected...")
         self.thread1.r.UDP_IP = str(self.ipAddress.text())
         self.thread1.r.UDP_PORT = int(self.portAddress.text())
-        self.statusbar.showMessage("Connected...")
 
-    def start(self):
-        self.thread1.r.servoON()
-        self.servo = True
-        self.servoOn_btn.setText("ServoOff")
+    def start_manual(self):
         self.statusbar.showMessage("Start...")
+        self.thread1.r.servoON()
+        self.servoOn_btn.setText("ServoOff")
 
-    def stop(self):
+    def stop_manual(self):
+        self.statusbar.showMessage("Stop and go home...")
         self.go_home()
         self.thread1.r.servoOFF()
-        self.servo = False
         self.servoOn_btn.setText("ServoOn")
-        self.statusbar.showMessage("Stop and go home...")
 
     def go_home(self):
-        self.thread1.r.Write_Robot_XYZ(xc, yc, zc)
         self.statusbar.showMessage("Go home...")
+        self.thread1.r.Write_Robot_XYZ(xc, yc, zc)
 
     def servo_on(self):
-        if (self.servo == False):
+        if (self.servoOn_btn.text() == "ServoOn"):
+            self.statusbar.showMessage("Turn servo on...")
             self.thread1.r.servoON()
             self.servoOn_btn.setText("ServoOff")
-            self.servo = True
-            self.statusbar.showMessage("Turn servo on...")
         else:
+            self.statusbar.showMessage("Turn servo off...")
             self.thread1.r.servoOFF()
             self.servoOn_btn.setText("ServoOn")
-            self.servo = False
-            self.statusbar.showMessage("Turn servo off...")
 
     def start_conveyor(self):
         if (self.conveyor):
+            self.startConveyor_btn.setText("Start Conveyor")
             self.thread1.r.writeByte(2, 0)
             self.conveyor = False
-            self.startConveyor_btn.setText("Start Conveyor")
         else:
+            self.startConveyor_btn.setText("Stop Conveyor")
             self.thread1.r.writeByte(2, 1)
             self.conveyor = True
-            self.startConveyor_btn.setText("Stop Conveyor")
+
+    def tool_on(self):
+        self.thread1.r.ToolStart()
+        if (self.toolOn_btn.text() == "Tool On"):
+            self.toolOn_btn.setText("Tool Off")
+        else:
+            self.toolOn_btn.setText("Tool On")
+
 
     ################################################################
     #####################  Manual Control   ########################
@@ -148,7 +154,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.Z_line.setText(str(z))
         self.Rx_line.setText(str(rx))
         self.Ry_line.setText(str(ry))
-        self.Rz_line.setText(str(rz))   
+        self.Rz_line.setText(str(rz))
 
     def set_position(self):
         x = self.setX_line.text()
@@ -157,10 +163,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         rx = self.setRx_line.text()
         ry = self.setRy_line.text()
         rz = self.setRz_line.text()
-        self.thread1.r.v_r = int(self.setSpeed_line.text())
+        if (self.setSpeed_line.text() != ""):
+            self.thread1.r.v_r = int(self.setSpeed_line.text())
         self.thread1.r.Write_Robot_XYZ(x, y, z, rx, ry, rz)
 
-    def set_default(self):
+    def set_default_position(self):
         self.setX_line.setText(xc)
         self.setY_line.setText(yc)
         self.setZ_line.setText(zc)
@@ -206,7 +213,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     ################################################################
     #####################  Teaching Point   ########################
     ################################################################
-    def teaching(self):
+    def teaching_point(self):
         n = self.tableWidgetPoints.rowCount()
         self.tableWidgetPoints.setRowCount(n)
         self.tableWidgetPoints.setColumnCount(6)
@@ -219,11 +226,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.tableWidgetPoints.setItem(n, 4, QTableWidgetItem(str(ry/10000)))
         self.tableWidgetPoints.setItem(n, 5, QTableWidgetItem(str(rz/10000)))
 
-    def clear(self):
+    def clear_point(self):
         row = self.tableWidgetPoints.currentRow()
         self.tableWidgetPoints.removeRow(row)
 
-    def forward(self):
+    def forward_point(self):
         row = self.tableWidgetPoints.currentRow()
         x = self.tableWidgetPoints.item(row, 0).text()
         y = self.tableWidgetPoints.item(row, 1).text()
@@ -240,37 +247,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def start_auto(self):
         self.thread1.change_pixmap_signal.connect(self.update_image)
         self.thread1.send_fps.connect(self.show_fps)
-        self.thread1.send_pos.connect(self.display_position)
         self.thread1.start()
         self.thread1.r.servoON()
-        self.servo = True
+        self.servoOn_btn.setText("ServoOff")
         self.thread1.r.Write_Robot_XYZ(xc, yc, zc)
 
     def stop_auto(self):
-        self.thread1.auto_run = False
+        self.thread1.r.writeByte(1, 1)
         self.thread1.quit()
+        self.thread1.wait(50)
         self.go_home()
         self.thread1.r.CheckToolOff()
         self.thread1.r.servoOFF()
-        self.servo = False
         self.servoOn_btn.setText("ServoOn")
         self.statusbar.showMessage("Stop and go home...")
-
-    def display_position(self, data):
-        x, y, z, rx, ry, rz = data
-        x, y, z, rx, ry, rz = x/1000, y/1000, z/1000, rx/10000, ry/10000, rz/10000
-        self.posX.setText(str(x))
-        self.posY.setText(str(y))
-        self.posZ.setText(str(z))
-        self.posRx.setText(str(rx))
-        self.posRy.setText(str(ry))
-        self.posRz.setText(str(rz))
 
     def start_capture(self):
         if not self.thread1.cam_flag:
             self.thread1.change_pixmap_signal.connect(self.update_image)
             self.thread1.send_fps.connect(self.show_fps)
-            self.thread1.send_pos.connect(self.display_position)
             self.thread1.start()
 
             self.thread2 = threading.Thread(target=self.thread1.camera_run)
@@ -280,6 +275,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.thread2 = threading.Thread(target=self.thread1.camera_run)
             self.thread2.setDaemon(True)
             self.thread2.start()
+
         self.statusbar.showMessage("Start capture...")
 
 
@@ -301,7 +297,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         else:
             self.statusbar.showMessage("Stop detecting...")
 
-    def changeCam_value(self, x, detect_flag):
+    def changeCam_config(self, x, detect_flag):
         if detect_flag == 'confSpinBox':
             self.confSlider.setValue(int(x*100))
         elif detect_flag == 'confSlider':
@@ -325,7 +321,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.iouSlider.setProperty("value", 45)
         
         self.statusbar.showMessage("Changed model...")
-
 
 
     def show_fps(self, fps):
