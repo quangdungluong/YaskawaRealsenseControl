@@ -11,7 +11,6 @@ import math
 class Main_loop(QThread):
     change_pixmap_signal = pyqtSignal(np.ndarray)
     send_fps = pyqtSignal(str)
-    send_msg = pyqtSignal(str)
 
     def __init__(self):
         super().__init__()
@@ -27,80 +26,77 @@ class Main_loop(QThread):
         self.r.writeByte(2, 0)
 
     def run(self):
-        ## Reset byte to 0
         self.r.writeByte(1, 0)
         self.r.writeByte(5, 0)
-        
         ## Start main job
         self.r.mainJobStart()
-
         self.auto_run = True
-
         self.r.servoON()
 
-        while(self.cam_flag and self.auto_run):
-            if (self.picking and len(self.XYZ_obj) > 0):
-                try:
-                    # Get object position and destination position
-                    x, y, z = self.XYZ_obj[0]['center_x'], self.XYZ_obj[0]['center_y'], self.XYZ_obj[0]['height']
-                    velocity = 35
-                    t1 = 2.11
-                    y = str(float(y) + velocity * t1)
-                    # x, y, z = self.estimatePos(xc, yc, zc, x, y, z)
+        while True:
+            if self.auto_run and self.cam_flag and self.picking and len(self.XYZ_obj) > 0:
+                x, y, z = self.XYZ_obj[0]['center_x'], self.XYZ_obj[0]['center_y'], self.XYZ_obj[0]['height']
+                self.XYZ_obj = []
+                velocity = 30
+                t1 = 3.11 # 3.11 work fine
+                y = str(float(y) + velocity * t1)
+                if (float(y) > -190 and float(y) < 110):
                     dest_x, dest_y, dest_z = "-11.53", "-258.413", "-34.826"
-                    self.XYZ_obj.pop(0)
                     print(x, y, z)
                     
                     self.r.writePos(30, x, y, z)
+                    self.r.writePos(31, xc, yc, zc)
                     self.r.writePos(36, dest_x, dest_y, dest_z)
                     self.r.writeByte(5, 1)
-                    while(self.r.ReadByte(5)[32]==1):
-                        pass
-
+                    time.sleep(5)
                     self.r.writeByte(6, 1)
-
-                    while(self.r.ReadByte(2)[32]==1):
-                        pass
-
-                    self.r.writeByte(6, 0)
+                    
+                    self.checkDone()
 
                     self.picking = False
-                    self.send_msg.emit("Picking & Placing...")
-                except:
-                    pass
-
+                    time.sleep(1.5)
+                else:
+                    self.picking = False
+                
+            elif not self.auto_run:
+                break
+            else:
+                time.sleep(0.0001)
 
     def camera_run(self):
         self.cam_flag = True
         profile = self.camera.pipeline.start(self.camera.config)
-        # stream_profile_depth = profile.get_stream(rs.stream.depth)
+        stream_profile_depth = profile.get_stream(rs.stream.depth)
         stream_profile_color = profile.get_stream(rs.stream.color)
         self.camera.cam_intrinsic = stream_profile_color.as_video_stream_profile().get_intrinsics()
-        
-        while self.cam_flag:
-            # Changed model
-            if (self.camera.cur_weights != self.camera.weights):
-                self.camera.cur_weights = self.camera.weights
-                self.camera.model = torch.hub.load('E:/yolov5', 'custom', path=self.camera.cur_weights, source='local')
 
+        if (self.camera.cur_weights != self.camera.weights):
+            self.camera.cur_weights = self.camera.weights
+            self.camera.model = torch.hub.load('E:/yolov5', 'custom', path=self.camera.cur_weights, source='local')
+
+        while True:
             frames = self.camera.pipeline.wait_for_frames()
-            # frames = self.camera.align.process(frames)
+            frames = self.camera.align.process(frames)
             depth_frame = frames.get_depth_frame()
             color_frame = frames.get_color_frame()
             if not depth_frame or not color_frame:
                 continue
 
-            # Convert images to numpy arrays
-            # depth_image = np.asanyarray(depth_frame.get_data())
+            depth_image = np.asanyarray(depth_frame.get_data())
             color_image = np.asanyarray(color_frame.get_data())
-            self.camera.result, self.XYZ_obj = self.camera.process(color_image, depth_frame)
-            
-            if (not self.picking) and (len(self.XYZ_obj)>0):
-                self.r.writeByte(2, 1)
+
+            result, XYZ_obj = self.camera.process(color_image, depth_frame)
+            if (self.picking==False) and len(XYZ_obj)!=0:
                 self.picking = True
+                self.XYZ_obj = XYZ_obj
+
+            self.change_pixmap_signal.emit(result)
+            self.send_fps.emit(self.camera.fps)
+
+            if not self.cam_flag:
+                break
+
             
-            self.change_pixmap_signal.emit(self.camera.result)
-            self.send_fps.emit(self.camera.fps)      
             
     def read_conveyor(self):
         v = 45.2
@@ -117,3 +113,11 @@ class Main_loop(QThread):
         # y_new = (-b + delta)/+2/a
         y_new = str(float(y0) + 25)
         return x0, y_new, z0
+
+    def checkDone(self):
+        while(1):
+            data = self.r.ReadByte(2)
+            while(len(data)!=33):
+                data = self.r.ReadByte(2)
+            if (data[32]==0):
+                break

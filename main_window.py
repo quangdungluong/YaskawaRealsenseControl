@@ -247,10 +247,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def start_auto(self):
         self.thread1.change_pixmap_signal.connect(self.update_image)
         self.thread1.send_fps.connect(self.show_fps)
-        self.thread1.start()
         self.thread1.r.servoON()
-        self.servoOn_btn.setText("ServoOff")
         self.thread1.r.Write_Robot_XYZ(xc, yc, zc)
+        self.thread1.start()
+        self.servoOn_btn.setText("ServoOff")
 
     def stop_auto(self):
         self.thread1.r.writeByte(5, 1)
