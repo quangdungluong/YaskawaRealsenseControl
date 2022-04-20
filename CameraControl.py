@@ -20,29 +20,21 @@ class CameraControl:
         ############### Realsense ###############
         self.pipeline = rs.pipeline()
         self.config = rs.config()
-        self.config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
-        self.config.enable_stream(rs.stream.color, 640, 480, rs.format.rgb8, 30)                                                         
+        self.config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 15)
+        self.config.enable_stream(rs.stream.color, 640, 480, rs.format.rgb8, 15)                                                         
         align_to = rs.stream.color
         self.align = rs.align(align_to)
         self.cam_intrinsic = None          
-
-    def stop(self):
-        """Sets run flag to False and waits for thread to finish"""
-        self.pipeline = rs.pipeline()
-        self.config = rs.config()
-        self.config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
-        self.config.enable_stream(rs.stream.color, 640, 480, rs.format.rgb8, 30)   
 
     
     def process(self, color_image, depth_frame):
         """
         Process image and extract real world coordinate of objects
         """
-        self.result_dict = []
+        result_dict = []
         start_time = time.time()
         if (self.detect_flag):
-            image = color_image
-            pred = self.model(image)
+            pred = self.model(color_image)
             json = pred.pandas().xyxy[0].sort_values('xmax', ascending=False).to_dict(orient="records") # sort right -> left
             for row in json:
                 d = dict()
@@ -53,9 +45,9 @@ class CameraControl:
                 d['center_x'], d['center_y'], d['height'] = self.convert_to_realworld(center_x, center_y, center_z)
 
                 ## TEMPORARY ##
-                d['height'] = "-61"
+                d['height'] = "-60.5"
                 ###############
-                self.result_dict.append(d)        
+                result_dict.append(d)        
 
             result = pred.render()[0]
             self.fps = f"{1/(time.time() - start_time):.0f}"
@@ -63,7 +55,7 @@ class CameraControl:
             result = color_image
             self.fps = "15"
 
-        return result, self.result_dict
+        return result, result_dict
 
     def convert_to_realworld(self, x, y, z):
         x, y, z = rs.rs2_deproject_pixel_to_point(self.cam_intrinsic, [x, y], z)
