@@ -279,10 +279,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         #     self.thread2.start()
         self.thread1.change_pixmap_signal.connect(self.update_image)
         self.thread1.send_fps.connect(self.show_fps)
-        # self.thread1.start()
 
         self.thread2 = threading.Thread(target=self.thread1.camera_run)
-        # self.thread2.setDaemon(True)
+        self.thread2.setDaemon(True)
         self.thread2.start()
 
         self.statusbar.showMessage("Start capture...")
@@ -355,9 +354,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             event.accept()
         else:
             event.ignore()
-
-    def display_msg(self, msg):
-        self.statusbar.showMessage(msg)
 
     @pyqtSlot(np.ndarray)
     def update_image(self, cv_img):
