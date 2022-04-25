@@ -20,7 +20,7 @@ class Main_loop(QThread):
         self.r = RobotControl()
         self.camera = CameraControl() 
         self.picking = False
-        self.destXYZ_obj = [["-11.53", "-258.413", "-34.826"], ["-11.53", "-258.413", "-34.826"], ["-11.53", "-258.413", "-34.826"], ["-11.53", "-258.413", "-34.826"], ["-11.53", "-258.413", "-34.826"], ["-11.53", "-258.413", "-34.826"]]
+        self.destXYZ_obj = [["-11.53", "-258.413", "-34.826"], ["-6.811", "-250.208", "-34.826"], ["-77.612", "-268.413", "-34.826"], ["-18.390", "-299.207", "-34.826"], ["-11.53", "-258.413", "-34.826"], ["-11.53", "-258.413", "-34.826"]]
         self.cam_flag = False
         self.auto_run = False
         self.XYZ_obj = []
@@ -43,20 +43,17 @@ class Main_loop(QThread):
 
         while True:
             if self.auto_run and self.cam_flag and self.picking and len(self.XYZ_obj) > 0:
-                x, y, z, id = self.XYZ_obj[0]['center_x'], self.XYZ_obj[0]['center_y'], self.XYZ_obj[0]['height'], self.XYZ_obj[0]['name']
+                x, y, z, id = self.XYZ_obj[0]['center_x'], self.XYZ_obj[0]['center_y'], self.XYZ_obj[0]['height'], self.XYZ_obj[0]['class']
                 self.XYZ_obj = []
-                # velocity = 30
-                # t1 = 1.31 # 3.11 work fine
-                # y = str(float(y) + velocity * t1)
                 x, y, z = self.estimatePos(xc, yc, zc, x, y, z)
                 if (float(y) > -190 and float(y) < 110):
-                    dest_x, dest_y, dest_z = self.destXYZ_obj[0]
+                    dest_x, dest_y, dest_z = self.destXYZ_obj[id]
                     print(x, y, z)
         
                     self.r.writePos(30, x, y, z)
-                    self.r.writePos(33, x, y, "10")
-                    self.r.writePos(31, xc, yc, "20")
-                    self.r.writePos(36, dest_x, dest_y, dest_z)
+                    self.r.writePos(31, x, y, "10")
+                    self.r.writePos(32, dest_x, dest_y, dest_z)
+                    self.r.writePos(33, xc, yc, "20")
                     self.r.writeByte(5, 1)
                     time.sleep(5)
                     self.picking = False
@@ -81,10 +78,6 @@ class Main_loop(QThread):
             self.camera.model = torch.hub.load('E:/yolov5', 'custom', path=self.camera.cur_weights, source='local')
 
         while True:
-            try:
-                self.c = float(self.uart.read_one_struct())*10
-            except:
-                self.c = -1
             frames = self.camera.pipeline.wait_for_frames()
             frames = self.camera.align.process(frames)
             depth_frame = frames.get_depth_frame()
@@ -107,9 +100,10 @@ class Main_loop(QThread):
                 break
 
     def read_conveyor(self):
-        self.serial.write(b'1')
-        v = float(self.uart.read_one_struct())*10
-        return v
+        # self.serial.write(b'1')
+        # v = float(self.uart.read_one_struct())*10
+        # return v
+        return 30
 
     def estimatePos(self, xc, yc, zc, x0, y0, z0):
         """
@@ -118,8 +112,7 @@ class Main_loop(QThread):
         x, y, z: finding point, x=x0, z=z0
         """
         xc, yc, zc, x0, y0, z0 = float(xc), float(yc), float(zc), float(x0), float(y0), float(z0)
-        v_conveyor = self.c
-        print(v_conveyor)
+        v_conveyor = self.read_conveyor()
         v_robot = self.v
         delta_y = abs(yc-y0)
         a = v_robot**2 - v_conveyor**2
@@ -139,10 +132,10 @@ class Main_loop(QThread):
     #     else:
     #         self.checkDone()
 
-    def checkDone(self):
-        data = self.r.ReadByte(2)
+    # def checkDone(self):
+    #     data = self.r.ReadByte(2)
         
-        if (len(data)==33 and data[32]==1):
-            return True
-        elif (len(data)==33 and data[32]==0):
-            return False
+    #     if (len(data)==33 and data[32]==1):
+    #         return True
+    #     elif (len(data)==33 and data[32]==0):
+    #         return False

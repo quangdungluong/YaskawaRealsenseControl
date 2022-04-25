@@ -40,7 +40,7 @@ class CameraControl:
                 center_x = (row['xmin'] + row['xmax'])/2
                 center_y = (row['ymin'] + row['ymax'])/2
                 center_z = depth_frame.get_distance(int(center_x), int(center_y))
-                d['name'] = row['name']
+                d['class'] = row['class']
                 d['center_x'], d['center_y'], d['height'] = self.convert_to_realworld(center_x, center_y, center_z)
 
                 ## TEMPORARY ##
