@@ -20,12 +20,11 @@ class CameraControl:
         ############### Realsense ###############
         self.pipeline = rs.pipeline()
         self.config = rs.config()
-        self.config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 15)
-        self.config.enable_stream(rs.stream.color, 640, 480, rs.format.rgb8, 15)                                                         
+        self.config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
+        self.config.enable_stream(rs.stream.color, 640, 480, rs.format.rgb8, 30)                                                         
         align_to = rs.stream.color
         self.align = rs.align(align_to)
-        self.cam_intrinsic = None          
-
+        self.cam_intrinsic = None       
     
     def process(self, color_image, depth_frame):
         """
@@ -45,7 +44,7 @@ class CameraControl:
                 d['center_x'], d['center_y'], d['height'] = self.convert_to_realworld(center_x, center_y, center_z)
 
                 ## TEMPORARY ##
-                d['height'] = "-60.5"
+                d['height'] = "-63.5"
                 ###############
                 result_dict.append(d)        
 
