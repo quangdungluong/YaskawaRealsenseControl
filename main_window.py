@@ -91,9 +91,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.btnClearData.clicked.connect(self.clear_point)
         self.btnForward.clicked.connect(self.forward_point)
 
+        ## Test change speed robot
+        self.getSpeed_btn.clicked.connect(self.changeSpeed)
+
     ################################################################
     ##########  Connection, Basic and Machine Controller   #########
     ################################################################
+    def changeSpeed(self):
+        self.thread1.v = float(self.r_speed.text())
 
     def connect(self):
         self.statusbar.showMessage("Connected...")
@@ -247,8 +252,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def start_auto(self):
         self.thread1.change_pixmap_signal.connect(self.update_image)
         self.thread1.send_fps.connect(self.show_fps)
-        self.thread1.r.servoON()
-        self.thread1.r.Write_Robot_XYZ(xc, yc, zc)
         self.thread1.start()
         self.servoOn_btn.setText("ServoOff")
 
@@ -256,9 +259,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.thread1.r.writeByte(5, 1)
         self.thread1.r.writeByte(6, 1)
         self.thread1.r.writeByte(1, 1)
-        # self.thread1.quit()
-        # self.thread1.wait(50)
-        # self.go_home()
+        self.thread1.auto_run = False
+        self.thread1.quit()
+        self.thread1.wait(50)
+        self.go_home()
         self.thread1.r.CheckToolOff()
         self.thread1.r.servoOFF()
         self.servoOn_btn.setText("ServoOn")
