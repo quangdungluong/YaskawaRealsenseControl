@@ -2102,6 +2102,45 @@ selection-backgound-color: #282828;
        </layout>
       </widget>
      </widget>
+     <widget class="QWidget" name="horizontalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>550</y>
+        <width>204</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_27">
+       <item>
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Robot Speed</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="r_speed">
+         <property name="text">
+          <string>200</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QPushButton" name="getSpeed_btn">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>660</y>
+        <width>93</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Get</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
