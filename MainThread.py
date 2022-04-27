@@ -19,17 +19,16 @@ class Main_loop(QThread):
         super().__init__()
         self.r = RobotControl()
         self.camera = CameraControl() 
-        self.picking = False
-        self.destXYZ_obj = [["-11.53", "-258.413", "-34.826"], ["-6.811", "-250.208", "-34.826"], ["-77.612", "-268.413", "-34.826"], ["-18.390", "-299.207", "-34.826"], ["-11.53", "-258.413", "-34.826"], ["-11.53", "-258.413", "-34.826"]]
+        self.picking = False 
+        self.destXYZ_obj = [["-33.009", "-256.58", "-40.213"], ["44.593", "-256.58", "-40.213"], ["113.211", "-256.58", "-40.213"], ["-33.009", "-205.783", "-40.213"], ["44.577", "-205.783", "-40.213"], ["113.211", "-205.783", "-40.213"]]
         self.cam_flag = False
         self.auto_run = False
         self.XYZ_obj = []
-        self.v_robot = 200
         ## Reset conveyor
         self.r.writeByte(2, 1)
-        self.v = 0
+        self.v = 200
         self.c = 0
-        self.serial = serial.Serial('COM4', 9600, timeout=0.001)
+        self.serial = serial.Serial('COM4', 9600, timeout=0.0001)
         self.uart = ReadFromSerial(self.serial)
         self.count = True
 
@@ -52,10 +51,12 @@ class Main_loop(QThread):
         
                     self.r.writePos(30, x, y, z)
                     self.r.writePos(31, x, y, "10")
-                    self.r.writePos(32, dest_x, dest_y, dest_z)
-                    self.r.writePos(33, xc, yc, "20")
+                    self.r.writePos(32, dest_x, dest_y, "10")
+                    self.r.writePos(33, dest_x, dest_y, dest_z)
+                    self.r.writePos(34, xc, yc, "20")
                     self.r.writeByte(5, 1)
-                    time.sleep(5)
+                    # time.sleep(5)
+                    time.sleep(4)
                     self.picking = False
                 else:
                     self.picking = False
@@ -100,10 +101,19 @@ class Main_loop(QThread):
                 break
 
     def read_conveyor(self):
-        # self.serial.write(b'1')
-        # v = float(self.uart.read_one_struct())*10
-        # return v
-        return 30
+        self.serial.write(b'1')
+        try:
+            v = float(self.uart.read_one_struct())*10
+        except:
+            v = 100
+        while(v > 50):
+            self.serial.write(b'1')
+            try:
+                v = float(self.uart.read_one_struct())*10
+            except:
+                v = 100
+        return v
+        # return 30.1875
 
     def estimatePos(self, xc, yc, zc, x0, y0, z0):
         """
@@ -123,19 +133,3 @@ class Main_loop(QThread):
         t = (-b + math.sqrt(delta))/(2*a)
         y = y0 + v_conveyor*t
         return x0, y, z0
-
-    # def checkDone(self):
-    #     data = self.r.ReadByte(2)
-    #     if (len(data)==33): print(data[32])
-    #     if (len(data)==33 and data[32]==0):
-    #         return
-    #     else:
-    #         self.checkDone()
-
-    # def checkDone(self):
-    #     data = self.r.ReadByte(2)
-        
-    #     if (len(data)==33 and data[32]==1):
-    #         return True
-    #     elif (len(data)==33 and data[32]==0):
-    #         return False

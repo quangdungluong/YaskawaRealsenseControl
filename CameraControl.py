@@ -44,7 +44,7 @@ class CameraControl:
                 d['center_x'], d['center_y'], d['height'] = self.convert_to_realworld(center_x, center_y, center_z)
 
                 ## TEMPORARY ##
-                d['height'] = "-63.5"
+                d['height'] = "-65.5"
                 ###############
                 result_dict.append(d)        
 
