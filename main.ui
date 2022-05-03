@@ -6,12 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1229</width>
-    <height>929</height>
+    <width>1195</width>
+    <height>772</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>Cambria</family>
+    <pointsize>10</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Yaskawa Realsense Control</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTabWidget" name="tabWidget">
@@ -19,20 +25,20 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1201</width>
-      <height>881</height>
+      <width>1191</width>
+      <height>731</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Cambria</family>
-      <pointsize>10</pointsize>
+      <pointsize>12</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="manualTab">
      <attribute name="title">
@@ -43,14 +49,14 @@
        <rect>
         <x>820</x>
         <y>10</y>
-        <width>361</width>
-        <height>331</height>
+        <width>351</width>
+        <height>321</height>
        </rect>
       </property>
       <property name="font">
        <font>
         <family>Cambria</family>
-        <pointsize>10</pointsize>
+        <pointsize>12</pointsize>
         <weight>50</weight>
         <bold>false</bold>
        </font>
@@ -63,14 +69,14 @@
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>341</width>
-         <height>291</height>
+         <width>331</width>
+         <height>281</height>
         </rect>
        </property>
        <property name="font">
         <font>
          <family>Cambria</family>
-         <pointsize>10</pointsize>
+         <pointsize>12</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -95,7 +101,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -113,7 +119,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -144,7 +150,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -162,7 +168,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -193,7 +199,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -211,7 +217,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -242,7 +248,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -260,7 +266,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -291,7 +297,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -309,7 +315,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -340,7 +346,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -358,7 +364,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -377,7 +383,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -392,7 +398,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -408,13 +414,13 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
             </property>
             <property name="text">
-             <string>Default</string>
+             <string>Home Position</string>
             </property>
            </widget>
           </item>
@@ -423,7 +429,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -444,13 +450,13 @@
         <x>370</x>
         <y>10</y>
         <width>431</width>
-        <height>331</height>
+        <height>321</height>
        </rect>
       </property>
       <property name="font">
        <font>
         <family>Cambria</family>
-        <pointsize>10</pointsize>
+        <pointsize>12</pointsize>
         <weight>50</weight>
         <bold>false</bold>
        </font>
@@ -463,14 +469,14 @@
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>224</width>
-         <height>291</height>
+         <width>221</width>
+         <height>281</height>
         </rect>
        </property>
        <property name="font">
         <font>
          <family>Cambria</family>
-         <pointsize>10</pointsize>
+         <pointsize>12</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -483,7 +489,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -498,7 +504,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -513,7 +519,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -532,7 +538,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -547,7 +553,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -562,7 +568,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -581,7 +587,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -596,7 +602,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -611,7 +617,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -630,7 +636,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -645,7 +651,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -660,7 +666,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -679,7 +685,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -694,7 +700,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -709,7 +715,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -728,7 +734,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -743,7 +749,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -758,7 +764,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -784,7 +790,7 @@
        <property name="font">
         <font>
          <family>Cambria</family>
-         <pointsize>10</pointsize>
+         <pointsize>12</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -795,7 +801,7 @@
           <property name="font">
            <font>
             <family>Cambria</family>
-            <pointsize>10</pointsize>
+            <pointsize>12</pointsize>
             <weight>50</weight>
             <bold>false</bold>
            </font>
@@ -810,7 +816,7 @@
           <property name="font">
            <font>
             <family>Cambria</family>
-            <pointsize>10</pointsize>
+            <pointsize>12</pointsize>
             <weight>50</weight>
             <bold>false</bold>
            </font>
@@ -828,7 +834,7 @@
           <property name="font">
            <font>
             <family>Cambria</family>
-            <pointsize>10</pointsize>
+            <pointsize>12</pointsize>
             <weight>50</weight>
             <bold>false</bold>
            </font>
@@ -857,6 +863,7 @@
        </property>
        <property name="font">
         <font>
+         <pointsize>12</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -866,6 +873,7 @@
          <widget class="QLabel" name="label_9">
           <property name="font">
            <font>
+            <pointsize>12</pointsize>
             <weight>50</weight>
             <bold>false</bold>
            </font>
@@ -879,6 +887,7 @@
          <widget class="QSpinBox" name="step_spin">
           <property name="font">
            <font>
+            <pointsize>12</pointsize>
             <weight>50</weight>
             <bold>false</bold>
            </font>
@@ -897,16 +906,16 @@
      <widget class="QGroupBox" name="groupBox_3">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>350</y>
-        <width>351</width>
-        <height>331</height>
+        <x>10</x>
+        <y>340</y>
+        <width>341</width>
+        <height>341</height>
        </rect>
       </property>
       <property name="font">
        <font>
         <family>Cambria</family>
-        <pointsize>10</pointsize>
+        <pointsize>12</pointsize>
         <weight>50</weight>
         <bold>false</bold>
        </font>
@@ -919,14 +928,14 @@
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>331</width>
+         <width>321</width>
          <height>291</height>
         </rect>
        </property>
        <property name="font">
         <font>
          <family>Cambria</family>
-         <pointsize>10</pointsize>
+         <pointsize>12</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -951,7 +960,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -969,7 +978,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -1000,7 +1009,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -1018,7 +1027,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -1049,7 +1058,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -1067,7 +1076,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -1098,7 +1107,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -1116,7 +1125,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -1147,7 +1156,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -1165,7 +1174,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -1196,7 +1205,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -1214,7 +1223,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -1230,6 +1239,7 @@
          <widget class="QPushButton" name="getPos_btn">
           <property name="font">
            <font>
+            <pointsize>12</pointsize>
             <weight>50</weight>
             <bold>false</bold>
            </font>
@@ -1245,16 +1255,16 @@
      <widget class="QGroupBox" name="groupBox_2">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>240</y>
-        <width>351</width>
-        <height>101</height>
+        <x>10</x>
+        <y>200</y>
+        <width>341</width>
+        <height>131</height>
        </rect>
       </property>
       <property name="font">
        <font>
         <family>Cambria</family>
-        <pointsize>10</pointsize>
+        <pointsize>12</pointsize>
         <weight>50</weight>
         <bold>false</bold>
        </font>
@@ -1266,10 +1276,15 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>20</y>
-         <width>331</width>
-         <height>80</height>
+         <y>30</y>
+         <width>321</width>
+         <height>81</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
@@ -1278,6 +1293,7 @@
            <widget class="QPushButton" name="start_btn">
             <property name="font">
              <font>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -1292,7 +1308,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -1307,7 +1323,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -1323,6 +1339,11 @@
          <layout class="QHBoxLayout" name="horizontalLayout_26">
           <item>
            <widget class="QPushButton" name="toolOn_btn">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>Tool On</string>
             </property>
@@ -1333,7 +1354,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -1348,39 +1369,39 @@
        </layout>
       </widget>
      </widget>
-     <widget class="QGroupBox" name="connectionGroupBox">
+     <widget class="QGroupBox" name="UDPConnection">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>10</x>
         <y>10</y>
-        <width>351</width>
-        <height>231</height>
+        <width>341</width>
+        <height>181</height>
        </rect>
       </property>
       <property name="font">
        <font>
         <family>Cambria</family>
-        <pointsize>10</pointsize>
+        <pointsize>12</pointsize>
         <weight>50</weight>
         <bold>false</bold>
        </font>
       </property>
       <property name="title">
-       <string>Connection</string>
+       <string>UDP Connection</string>
       </property>
       <widget class="QWidget" name="verticalLayoutWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>331</width>
-         <height>193</height>
+         <width>321</width>
+         <height>131</height>
         </rect>
        </property>
        <property name="font">
         <font>
          <family>Cambria</family>
-         <pointsize>10</pointsize>
+         <pointsize>12</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -1389,7 +1410,7 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0">
           <property name="spacing">
-           <number>8</number>
+           <number>15</number>
           </property>
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
@@ -1405,7 +1426,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -1423,7 +1444,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -1438,7 +1459,7 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <property name="spacing">
-           <number>50</number>
+           <number>58</number>
           </property>
           <item>
            <widget class="QLabel" name="port_label">
@@ -1451,7 +1472,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -1466,7 +1487,7 @@
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -1479,51 +1500,11 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <property name="spacing">
-           <number>20</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="fileport_label">
-            <property name="font">
-             <font>
-              <family>Cambria</family>
-              <pointsize>10</pointsize>
-              <weight>50</weight>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>File Port</string>
-            </property>
-            <property name="scaledContents">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="fileportAddress">
-            <property name="font">
-             <font>
-              <family>Cambria</family>
-              <pointsize>10</pointsize>
-              <weight>50</weight>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>10041</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
          <widget class="QPushButton" name="connect_btn">
           <property name="font">
            <font>
             <family>Cambria</family>
-            <pointsize>10</pointsize>
+            <pointsize>12</pointsize>
             <weight>50</weight>
             <bold>false</bold>
            </font>
@@ -1540,14 +1521,14 @@
       <property name="geometry">
        <rect>
         <x>370</x>
-        <y>350</y>
-        <width>811</width>
-        <height>331</height>
+        <y>340</y>
+        <width>801</width>
+        <height>341</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>10</pointsize>
+        <pointsize>12</pointsize>
         <weight>50</weight>
         <bold>false</bold>
        </font>
@@ -1564,10 +1545,16 @@
          <height>251</height>
         </rect>
        </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="font">
         <font>
          <family>Cambria</family>
-         <pointsize>10</pointsize>
+         <pointsize>12</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -1576,8 +1563,8 @@
         <string notr="true">QTableWidget{
 
 background-color:rgb(230, 230, 255);
-altermate-backgroud-color: #606060;
-selection-backgound-color: #282828;
+alternate-background-color: #606060;
+selection-background-color: #282828;
 }
 </string>
        </property>
@@ -1596,6 +1583,12 @@ selection-backgound-color: #282828;
        <property name="gridStyle">
         <enum>Qt::DashLine</enum>
        </property>
+       <attribute name="horizontalHeaderCascadingSectionResizes">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="horizontalHeaderDefaultSectionSize">
+        <number>126</number>
+       </attribute>
        <column>
         <property name="text">
          <string>X</string>
@@ -1693,7 +1686,7 @@ selection-backgound-color: #282828;
        </property>
        <property name="font">
         <font>
-         <pointsize>10</pointsize>
+         <pointsize>12</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -1713,7 +1706,7 @@ selection-backgound-color: #282828;
        </property>
        <property name="font">
         <font>
-         <pointsize>10</pointsize>
+         <pointsize>12</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -1733,7 +1726,7 @@ selection-backgound-color: #282828;
        </property>
        <property name="font">
         <font>
-         <pointsize>10</pointsize>
+         <pointsize>12</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -1751,8 +1744,8 @@ selection-backgound-color: #282828;
      <widget class="QFrame" name="frame">
       <property name="geometry">
        <rect>
-        <x>430</x>
-        <y>50</y>
+        <x>450</x>
+        <y>150</y>
         <width>640</width>
         <height>480</height>
        </rect>
@@ -1793,7 +1786,7 @@ selection-backgound-color: #282828;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>130</y>
+        <y>240</y>
         <width>351</width>
         <height>401</height>
        </rect>
@@ -1801,7 +1794,7 @@ selection-backgound-color: #282828;
       <property name="font">
        <font>
         <family>Cambria</family>
-        <pointsize>10</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="title">
@@ -1830,7 +1823,7 @@ selection-backgound-color: #282828;
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
              </font>
             </property>
             <property name="text">
@@ -1843,7 +1836,7 @@ selection-backgound-color: #282828;
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
              </font>
             </property>
             <property name="text">
@@ -1860,7 +1853,7 @@ selection-backgound-color: #282828;
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
              </font>
             </property>
             <property name="text">
@@ -1873,7 +1866,7 @@ selection-backgound-color: #282828;
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
              </font>
             </property>
             <property name="text">
@@ -1903,7 +1896,7 @@ selection-backgound-color: #282828;
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
              </font>
             </property>
             <property name="text">
@@ -1916,7 +1909,7 @@ selection-backgound-color: #282828;
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
              </font>
             </property>
            </widget>
@@ -1930,7 +1923,7 @@ selection-backgound-color: #282828;
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
              </font>
             </property>
             <property name="text">
@@ -1945,7 +1938,7 @@ selection-backgound-color: #282828;
               <property name="font">
                <font>
                 <family>Cambria</family>
-                <pointsize>10</pointsize>
+                <pointsize>12</pointsize>
                </font>
               </property>
               <property name="maximum">
@@ -1989,7 +1982,7 @@ selection-backgound-color: #282828;
             <property name="font">
              <font>
               <family>Cambria</family>
-              <pointsize>10</pointsize>
+              <pointsize>12</pointsize>
              </font>
             </property>
             <property name="text">
@@ -2004,7 +1997,7 @@ selection-backgound-color: #282828;
               <property name="font">
                <font>
                 <family>Cambria</family>
-                <pointsize>10</pointsize>
+                <pointsize>12</pointsize>
                </font>
               </property>
               <property name="maximum">
@@ -2048,7 +2041,7 @@ selection-backgound-color: #282828;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>40</y>
+        <y>30</y>
         <width>351</width>
         <height>91</height>
        </rect>
@@ -2056,7 +2049,7 @@ selection-backgound-color: #282828;
       <property name="font">
        <font>
         <family>Cambria</family>
-        <pointsize>10</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="title">
@@ -2074,6 +2067,11 @@ selection-backgound-color: #282828;
        <layout class="QHBoxLayout" name="horizontalLayout_37">
         <item>
          <widget class="QPushButton" name="startAuto_btn">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>Start Auto</string>
           </property>
@@ -2081,6 +2079,11 @@ selection-backgound-color: #282828;
         </item>
         <item>
          <widget class="QPushButton" name="stopAuto_btn">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>Stop Auto</string>
           </property>
@@ -2091,7 +2094,7 @@ selection-backgound-color: #282828;
           <property name="font">
            <font>
             <family>Cambria</family>
-            <pointsize>10</pointsize>
+            <pointsize>12</pointsize>
            </font>
           </property>
           <property name="text">
@@ -2102,43 +2105,109 @@ selection-backgound-color: #282828;
        </layout>
       </widget>
      </widget>
-     <widget class="QWidget" name="horizontalLayoutWidget">
+     <widget class="QGroupBox" name="groupBox_7">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>550</y>
-        <width>204</width>
-        <height>80</height>
+        <x>10</x>
+        <y>130</y>
+        <width>351</width>
+        <height>101</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_27">
-       <item>
-        <widget class="QLabel" name="label_11">
-         <property name="text">
-          <string>Robot Speed</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="r_speed">
-         <property name="text">
-          <string>200</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="title">
+       <string>Robot Control</string>
+      </property>
+      <widget class="QWidget" name="verticalLayoutWidget_7">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>331</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_27">
+          <item>
+           <widget class="QLabel" name="label_11">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Robot Speed</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="r_speed">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>200</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="getSpeed_btn">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Set</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
-     <widget class="QPushButton" name="getSpeed_btn">
+     <widget class="QLabel" name="label_12">
       <property name="geometry">
        <rect>
-        <x>90</x>
-        <y>660</y>
-        <width>93</width>
-        <height>28</height>
+        <x>440</x>
+        <y>0</y>
+        <width>151</width>
+        <height>141</height>
        </rect>
       </property>
       <property name="text">
-       <string>Get</string>
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>asset/logo_BK.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_13">
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>30</y>
+        <width>491</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt;PICKING AND PLACING SYSTEM&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>
@@ -2149,13 +2218,15 @@ selection-backgound-color: #282828;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1229</width>
-     <height>26</height>
+     <width>1195</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="main.qrc"/>
+ </resources>
  <connections/>
 </ui>

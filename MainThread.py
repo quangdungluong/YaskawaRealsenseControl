@@ -28,8 +28,8 @@ class Main_loop(QThread):
         self.r.writeByte(2, 1)
         self.v = 200
         self.c = 0
-        self.serial = serial.Serial('COM4', 9600, timeout=0.0001)
-        self.uart = ReadFromSerial(self.serial)
+        # self.serial = serial.Serial('COM4', 9600, timeout=0.0001)
+        # self.uart = ReadFromSerial(self.serial)
         self.count = True
 
     def run(self):

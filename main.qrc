@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="logoBK">
+    <file>asset/logo_BK.png</file>
+  </qresource>
+</RCC>
