@@ -4,8 +4,6 @@ from CameraControl import *
 from RobotControl import *
 import cv2
 import time
-import glob
-import csv
 import numpy as np
 from PyQt5.QtCore import pyqtSignal, QThread, QTimer
 import math
@@ -20,17 +18,16 @@ class Main_loop(QThread):
         self.r = RobotControl()
         self.camera = CameraControl() 
         self.picking = False 
-        self.destXYZ_obj = [["-33.009", "-256.58", "-40.213"], ["44.593", "-256.58", "-40.213"], ["113.211", "-256.58", "-40.213"], ["-33.009", "-205.783", "-40.213"], ["44.577", "-205.783", "-40.213"], ["113.211", "-205.783", "-40.213"]]
+        self.destXYZ_obj = [["-33.009", "-256.58", "-55.6"], ["44.593", "-256.58", "-55.6"], ["113.211", "-256.58", "-55.6"], ["-33.009", "-205.783", "-55.6"], ["44.577", "-205.783", "-55.6"], ["113.211", "-205.783", "-55.6"]]
+        self.offset = [0, 0, 0, 0, 0, 0]
         self.cam_flag = False
         self.auto_run = False
         self.XYZ_obj = []
-        ## Reset conveyor
-        self.r.writeByte(2, 1)
         self.v = 200
         self.c = 0
         # self.serial = serial.Serial('COM4', 9600, timeout=0.0001)
         # self.uart = ReadFromSerial(self.serial)
-        self.count = True
+        self.firstPick = True # fix lagging when first pick
 
     def run(self):
         self.r.writeByte(1, 0)
@@ -42,20 +39,24 @@ class Main_loop(QThread):
 
         while True:
             if self.auto_run and self.cam_flag and self.picking and len(self.XYZ_obj) > 0:
-                x, y, z, id = self.XYZ_obj[0]['center_x'], self.XYZ_obj[0]['center_y'], self.XYZ_obj[0]['height'], self.XYZ_obj[0]['class']
+                x, y, z, rz, id = self.XYZ_obj[0]['center_x'], self.XYZ_obj[0]['center_y'], self.XYZ_obj[0]['height'], self.XYZ_obj[0]['rz'], self.XYZ_obj[0]['class']
                 self.XYZ_obj = []
                 x, y, z = self.estimatePos(xc, yc, zc, x, y, z)
                 if (float(y) > -190 and float(y) < 110):
                     dest_x, dest_y, dest_z = self.destXYZ_obj[id]
+                    offset = self.offset[id]
+                    dest_x = str(float(dest_x) - 25*(offset%3))
+                    dest_y = str(float(dest_y) + 25*(offset//3))
+                    dest_z = str(float(dest_z) + 18*(offset//6))
+                    self.offset[id] += 1
                     print(x, y, z)
         
-                    self.r.writePos(30, x, y, z)
-                    self.r.writePos(31, x, y, "10")
-                    self.r.writePos(32, dest_x, dest_y, "10")
-                    self.r.writePos(33, dest_x, dest_y, dest_z)
-                    self.r.writePos(34, xc, yc, "20")
+                    self.r.writePosition(30, x, y, z)
+                    self.r.writePosition(31, x, y, "10")
+                    self.r.writePosition(32, dest_x, dest_y, "10", rz=rz)
+                    self.r.writePosition(33, dest_x, dest_y, dest_z, rz=rz)
+                    self.r.writePosition(34, xc, yc, "20")
                     self.r.writeByte(5, 1)
-                    # time.sleep(5)
                     time.sleep(4)
                     self.picking = False
                 else:
@@ -91,8 +92,12 @@ class Main_loop(QThread):
 
             result, XYZ_obj = self.camera.process(color_image, depth_frame)
             if self.picking == False and len(XYZ_obj)!=0:
-                self.picking = True
-                self.XYZ_obj = XYZ_obj
+                if self.firstPick:
+                    self.firstPick = False
+                    continue
+                else:
+                    self.picking = True
+                    self.XYZ_obj = XYZ_obj
 
             self.change_pixmap_signal.emit(result)
             self.send_fps.emit(self.camera.fps)
@@ -101,19 +106,19 @@ class Main_loop(QThread):
                 break
 
     def read_conveyor(self):
-        self.serial.write(b'1')
-        try:
-            v = float(self.uart.read_one_struct())*10
-        except:
-            v = 100
-        while(v > 50):
-            self.serial.write(b'1')
-            try:
-                v = float(self.uart.read_one_struct())*10
-            except:
-                v = 100
-        return v
-        # return 30.1875
+        # self.serial.write(b'1')
+        # try:
+        #     v = float(self.uart.read_one_struct())*10
+        # except:
+        #     v = 100
+        # while(v > 50):
+        #     self.serial.write(b'1')
+        #     try:
+        #         v = float(self.uart.read_one_struct())*10
+        #     except:
+        #         v = 100
+        # return v
+        return 0
 
     def estimatePos(self, xc, yc, zc, x0, y0, z0):
         """

@@ -54,7 +54,7 @@ class RobotControl:
         time.sleep(0.1)
         return data
 
-    def writePos(self, index, x_d, y_d, z_d, rx = "180.000", ry = "0.0000", rz = "0.0000"):
+    def writePosition(self, index, x_d, y_d, z_d, rx = "180.000", ry = "0.0000", rz = "0.0000"):
         """
         Write Position to variable index
         """
@@ -143,9 +143,9 @@ class RobotControl:
             ry = self.to_int(data[68], data[69], data[70], data[71])
             # Rz 72 75
             rz = self.to_int(data[72], data[73], data[74], data[75])
+            return x, y, z, rx, ry, rz
         except:
-            x, y, z, rx, ry, rz = -1, -1, -1, -1, -1, -1
-        return x, y, z, rx, ry, rz
+            return 0, 0, 0, 0, 0, 0
 
 
     def Write_Robot_XYZ(self, x_d, y_d, z_d, rx = "180.000", ry = "0.0000", rz = "0.0000"): # ID = 00 04

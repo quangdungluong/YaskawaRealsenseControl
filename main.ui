@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1195</width>
-    <height>772</height>
+    <width>1222</width>
+    <height>801</height>
    </rect>
   </property>
   <property name="font">
@@ -19,14 +19,18 @@
   <property name="windowTitle">
    <string>Yaskawa Realsense Control</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>asset/motomini.png</normaloff>asset/motomini.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1191</width>
-      <height>731</height>
+      <width>1221</width>
+      <height>751</height>
      </rect>
     </property>
     <property name="font">
@@ -38,7 +42,7 @@
      </font>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="manualTab">
      <attribute name="title">
@@ -47,10 +51,10 @@
      <widget class="QGroupBox" name="groupBox_5">
       <property name="geometry">
        <rect>
-        <x>820</x>
+        <x>840</x>
         <y>10</y>
-        <width>351</width>
-        <height>321</height>
+        <width>361</width>
+        <height>341</height>
        </rect>
       </property>
       <property name="font">
@@ -70,7 +74,7 @@
          <x>10</x>
          <y>30</y>
          <width>331</width>
-         <height>281</height>
+         <height>291</height>
         </rect>
        </property>
        <property name="font">
@@ -85,7 +89,7 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="0,0">
           <property name="spacing">
-           <number>37</number>
+           <number>48</number>
           </property>
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
@@ -134,7 +138,7 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="0,0">
           <property name="spacing">
-           <number>37</number>
+           <number>47</number>
           </property>
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
@@ -183,7 +187,7 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="0,0">
           <property name="spacing">
-           <number>37</number>
+           <number>48</number>
           </property>
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
@@ -232,7 +236,7 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_14" stretch="0,0">
           <property name="spacing">
-           <number>29</number>
+           <number>37</number>
           </property>
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
@@ -281,7 +285,7 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="0,0">
           <property name="spacing">
-           <number>29</number>
+           <number>37</number>
           </property>
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
@@ -330,7 +334,7 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_16" stretch="0,0">
           <property name="spacing">
-           <number>30</number>
+           <number>38</number>
           </property>
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
@@ -447,10 +451,10 @@
      <widget class="QGroupBox" name="groupBox_6">
       <property name="geometry">
        <rect>
-        <x>370</x>
+        <x>380</x>
         <y>10</y>
         <width>431</width>
-        <height>321</height>
+        <height>341</height>
        </rect>
       </property>
       <property name="font">
@@ -469,8 +473,8 @@
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>221</width>
-         <height>281</height>
+         <width>226</width>
+         <height>291</height>
         </rect>
        </property>
        <property name="font">
@@ -907,7 +911,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>340</y>
+        <y>360</y>
         <width>341</width>
         <height>341</height>
        </rect>
@@ -1256,9 +1260,9 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>200</y>
+        <y>210</y>
         <width>341</width>
-        <height>131</height>
+        <height>141</height>
        </rect>
       </property>
       <property name="font">
@@ -1278,7 +1282,7 @@
          <x>10</x>
          <y>30</y>
          <width>321</width>
-         <height>81</height>
+         <height>91</height>
         </rect>
        </property>
        <property name="font">
@@ -1288,21 +1292,38 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
+         <layout class="QHBoxLayout" name="horizontalLayout_26">
           <item>
-           <widget class="QPushButton" name="start_btn">
+           <widget class="QPushButton" name="servoOn_btn">
             <property name="font">
              <font>
+              <family>Cambria</family>
               <pointsize>12</pointsize>
               <weight>50</weight>
               <bold>false</bold>
              </font>
             </property>
             <property name="text">
-             <string>Start</string>
+             <string>ServoOn</string>
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QPushButton" name="toolOn_btn">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Tool On</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <widget class="QPushButton" name="home_btn">
             <property name="font">
@@ -1335,37 +1356,6 @@
           </item>
          </layout>
         </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_26">
-          <item>
-           <widget class="QPushButton" name="toolOn_btn">
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Tool On</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="servoOn_btn">
-            <property name="font">
-             <font>
-              <family>Cambria</family>
-              <pointsize>12</pointsize>
-              <weight>50</weight>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>ServoOn</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
        </layout>
       </widget>
      </widget>
@@ -1375,7 +1365,7 @@
         <x>10</x>
         <y>10</y>
         <width>341</width>
-        <height>181</height>
+        <height>191</height>
        </rect>
       </property>
       <property name="font">
@@ -1395,7 +1385,7 @@
          <x>10</x>
          <y>30</y>
          <width>321</width>
-         <height>131</height>
+         <height>151</height>
         </rect>
        </property>
        <property name="font">
@@ -1459,7 +1449,7 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <property name="spacing">
-           <number>58</number>
+           <number>67</number>
           </property>
           <item>
            <widget class="QLabel" name="port_label">
@@ -1514,15 +1504,33 @@
           </property>
          </widget>
         </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QLabel" name="label_14">
+            <property name="text">
+             <string>Status</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="status_label">
+            <property name="text">
+             <string>Disconnected</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
        </layout>
       </widget>
      </widget>
      <widget class="QGroupBox" name="groupBox_8">
       <property name="geometry">
        <rect>
-        <x>370</x>
-        <y>340</y>
-        <width>801</width>
+        <x>380</x>
+        <y>360</y>
+        <width>821</width>
         <height>341</height>
        </rect>
       </property>
@@ -1541,7 +1549,7 @@
         <rect>
          <x>20</x>
          <y>30</y>
-         <width>761</width>
+         <width>781</width>
          <height>251</height>
         </rect>
        </property>
@@ -1568,6 +1576,9 @@ selection-background-color: #282828;
 }
 </string>
        </property>
+       <property name="autoScrollMargin">
+        <number>16</number>
+       </property>
        <property name="editTriggers">
         <set>QAbstractItemView::NoEditTriggers</set>
        </property>
@@ -1587,7 +1598,7 @@ selection-background-color: #282828;
         <bool>false</bool>
        </attribute>
        <attribute name="horizontalHeaderDefaultSectionSize">
-        <number>126</number>
+        <number>129</number>
        </attribute>
        <column>
         <property name="text">
@@ -1678,7 +1689,7 @@ selection-background-color: #282828;
       <widget class="QPushButton" name="btnTeaching">
        <property name="geometry">
         <rect>
-         <x>220</x>
+         <x>140</x>
          <y>290</y>
          <width>121</width>
          <height>31</height>
@@ -1698,7 +1709,7 @@ selection-background-color: #282828;
       <widget class="QPushButton" name="btnClearData">
        <property name="geometry">
         <rect>
-         <x>360</x>
+         <x>590</x>
          <y>290</y>
          <width>121</width>
          <height>31</height>
@@ -1718,7 +1729,7 @@ selection-background-color: #282828;
       <widget class="QPushButton" name="btnForward">
        <property name="geometry">
         <rect>
-         <x>500</x>
+         <x>290</x>
          <y>290</y>
          <width>121</width>
          <height>31</height>
@@ -1733,6 +1744,19 @@ selection-background-color: #282828;
        </property>
        <property name="text">
         <string>FORWARD</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnPlayback">
+       <property name="geometry">
+        <rect>
+         <x>440</x>
+         <y>290</y>
+         <width>121</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>PLAYBACK</string>
        </property>
       </widget>
      </widget>
@@ -1786,8 +1810,8 @@ selection-background-color: #282828;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>240</y>
-        <width>351</width>
+        <y>250</y>
+        <width>371</width>
         <height>401</height>
        </rect>
       </property>
@@ -1805,7 +1829,7 @@ selection-background-color: #282828;
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>331</width>
+         <width>351</width>
          <height>361</height>
         </rect>
        </property>
@@ -2042,7 +2066,7 @@ selection-background-color: #282828;
        <rect>
         <x>10</x>
         <y>30</y>
-        <width>351</width>
+        <width>371</width>
         <height>91</height>
        </rect>
       </property>
@@ -2060,7 +2084,7 @@ selection-background-color: #282828;
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>331</width>
+         <width>351</width>
          <height>51</height>
         </rect>
        </property>
@@ -2089,19 +2113,6 @@ selection-background-color: #282828;
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QPushButton" name="startConveyor_btn">
-          <property name="font">
-           <font>
-            <family>Cambria</family>
-            <pointsize>12</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Start Conveyor</string>
-          </property>
-         </widget>
-        </item>
        </layout>
       </widget>
      </widget>
@@ -2110,8 +2121,8 @@ selection-background-color: #282828;
        <rect>
         <x>10</x>
         <y>130</y>
-        <width>351</width>
-        <height>101</height>
+        <width>371</width>
+        <height>111</height>
        </rect>
       </property>
       <property name="font">
@@ -2126,14 +2137,17 @@ selection-background-color: #282828;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>20</y>
-         <width>331</width>
-         <height>71</height>
+         <y>30</y>
+         <width>351</width>
+         <height>72</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_27">
+          <property name="spacing">
+           <number>50</number>
+          </property>
           <item>
            <widget class="QLabel" name="label_11">
             <property name="font">
@@ -2178,8 +2192,8 @@ selection-background-color: #282828;
      <widget class="QLabel" name="label_12">
       <property name="geometry">
        <rect>
-        <x>440</x>
-        <y>0</y>
+        <x>430</x>
+        <y>10</y>
         <width>151</width>
         <height>141</height>
        </rect>
@@ -2197,14 +2211,14 @@ selection-background-color: #282828;
      <widget class="QLabel" name="label_13">
       <property name="geometry">
        <rect>
-        <x>600</x>
-        <y>30</y>
-        <width>491</width>
+        <x>590</x>
+        <y>40</y>
+        <width>511</width>
         <height>71</height>
        </rect>
       </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt;PICKING AND PLACING SYSTEM&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;PICKING AND PLACING SYSTEM&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -2218,8 +2232,8 @@ selection-background-color: #282828;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1195</width>
-     <height>21</height>
+     <width>1222</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>

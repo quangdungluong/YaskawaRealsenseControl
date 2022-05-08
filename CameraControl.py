@@ -4,6 +4,7 @@ import pyrealsense2 as rs
 import torch
 import torch.backends.cudnn as cudnn
 import random
+from estimate2d import estimate_angle
 
 class CameraControl:
     def __init__(self):
@@ -46,6 +47,11 @@ class CameraControl:
                 ## TEMPORARY ##
                 d['height'] = "-65.5"
                 ###############
+
+                ## Calculate 2d orientation ##
+                img = color_image[int(row['ymin']-10):int(row['ymax']+10), int(row['xmin']-10):int(row['xmax']+10)]
+                d['rz'] = str(-estimate_angle(img[:, :, [2, 1, 0]]))
+                ##############################
                 result_dict.append(d)        
 
             result = pred.render()[0]
@@ -59,9 +65,9 @@ class CameraControl:
     def convert_to_realworld(self, x, y, z):
         x, y, z = rs.rs2_deproject_pixel_to_point(self.cam_intrinsic, [x, y], z)
         coord_mat = [[x], [y], [z], [1]]
-        calibration_mat = [[-0.03796503641,  0.9987888303,  -0.03129741865,  0.3244525494],
-                    [0.9992437674,  0.03768181288,  -0.009590318112,  -0.1112181919],
-                    [-0.008399359137,  -0.0316378473,  -0.9994641051,  0.3920535757],
+        calibration_mat = [[-0.06414223941,  0.9979230425,  -0.005947640776,  0.3180929458],
+                    [0.9979403731,  0.06413578406,  -0.001270011597,  -0.03084779342],
+                    [-0.0008859172322,  -0.006016852243,  -0.9999815061,  0.3921178095],
                     [0,  0,  0,  1]]
 
         a = np.dot(calibration_mat, coord_mat)

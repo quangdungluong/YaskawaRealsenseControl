@@ -24,19 +24,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.fps_box.setChecked(True)
         self.detect_box.setChecked(True)
 
-        self.conveyor = False
         self.thread1 = Main_loop()
 
         ## Connection and Basic Control button
         self.connect_btn.clicked.connect(self.connect)
-        self.start_btn.clicked.connect(self.start_manual)
         self.stop_btn.clicked.connect(self.stop_manual)
         self.servoOn_btn.clicked.connect(self.servo_on)
         self.home_btn.clicked.connect(self.go_home)
         self.toolOn_btn.clicked.connect(self.tool_on)
-
-        ## Machine Controller button
-        self.startConveyor_btn.clicked.connect(self.start_conveyor)
 
         ## Manual Position button
         self.getPos_btn.clicked.connect(self.get_position)
@@ -90,25 +85,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.btnTeaching.clicked.connect(self.teaching_point)
         self.btnClearData.clicked.connect(self.clear_point)
         self.btnForward.clicked.connect(self.forward_point)
+        self.btnPlayback.clicked.connect(self.playback)
 
         ## Test change speed robot
-        self.getSpeed_btn.clicked.connect(self.changeSpeed)
+        self.getSpeed_btn.clicked.connect(self.get_speed)
 
     ################################################################
     ##########  Connection, Basic and Machine Controller   #########
     ################################################################
-    def changeSpeed(self):
+    def get_speed(self):
         self.thread1.v = float(self.r_speed.text())
 
     def connect(self):
         self.statusbar.showMessage("Connected...")
+        self.status_label.setText("Connected")
         self.thread1.r.UDP_IP = str(self.ipAddress.text())
         self.thread1.r.UDP_PORT = int(self.portAddress.text())
-
-    def start_manual(self):
-        self.statusbar.showMessage("Start...")
-        self.thread1.r.servoON()
-        self.servoOn_btn.setText("ServoOff")
 
     def stop_manual(self):
         self.statusbar.showMessage("Stop and go home...")
@@ -129,16 +121,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.statusbar.showMessage("Turn servo off...")
             self.thread1.r.servoOFF()
             self.servoOn_btn.setText("ServoOn")
-
-    def start_conveyor(self):
-        if (self.conveyor):
-            self.startConveyor_btn.setText("Start Conveyor")
-            self.thread1.r.writeByte(2, 0)
-            self.conveyor = False
-        else:
-            self.startConveyor_btn.setText("Stop Conveyor")
-            self.thread1.r.writeByte(2, 1)
-            self.conveyor = True
 
     def tool_on(self):
         self.thread1.r.ToolStart()
@@ -243,8 +225,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         rx = self.tableWidgetPoints.item(row, 3).text()
         ry = self.tableWidgetPoints.item(row, 4).text()
         rz = self.tableWidgetPoints.item(row, 5).text()
-        print(x, y, z, rx, ry, rz)
+        # print(x, y, z, rx, ry, rz)
         self.thread1.r.Write_Robot_XYZ(x, y, z, rx, ry, rz)
+
+    ## In progress
+    def playback(self): 
+        for row in range(self.tableWidgetPoints.rowCount()):
+            x = self.tableWidgetPoints.item(row, 0).text()
+            y = self.tableWidgetPoints.item(row, 1).text()
+            z = self.tableWidgetPoints.item(row, 2).text()
+            rx = self.tableWidgetPoints.item(row, 3).text()
+            ry = self.tableWidgetPoints.item(row, 4).text()
+            rz = self.tableWidgetPoints.item(row, 5).text()
+            self.thread1.r.Write_Robot_XYZ(x, y, z, rx, ry, rz)
 
     ################################################################
     #######################  Auto Control   ########################
@@ -256,9 +249,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.servoOn_btn.setText("ServoOff")
 
     def stop_auto(self):
-        self.thread1.r.writeByte(5, 1)
-        self.thread1.r.writeByte(6, 1)
-        self.thread1.r.writeByte(1, 1)
+        # self.thread1.r.writeByte(5, 1)
+        # self.thread1.r.writeByte(6, 1)
+        # self.thread1.r.writeByte(1, 1)
         self.thread1.auto_run = False
         self.thread1.quit()
         self.thread1.wait(50)
@@ -269,18 +262,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.statusbar.showMessage("Stop and go home...")
 
     def start_capture(self):
-        # if not self.thread1.cam_flag:
-        #     self.thread1.change_pixmap_signal.connect(self.update_image)
-        #     self.thread1.send_fps.connect(self.show_fps)
-        #     self.thread1.start()
-
-        #     self.thread2 = threading.Thread(target=self.thread1.camera_run)
-        #     self.thread2.setDaemon(True)
-        #     self.thread2.start()
-        # else:
-        #     self.thread2 = threading.Thread(target=self.thread1.camera_run)
-        #     self.thread2.setDaemon(True)
-        #     self.thread2.start()
         self.thread1.change_pixmap_signal.connect(self.update_image)
         self.thread1.send_fps.connect(self.show_fps)
 
@@ -351,9 +332,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                         QMessageBox.Yes | QMessageBox.No)
         if close == QMessageBox.Yes:
             self.stop_auto()
-            if (self.conveyor):
-                self.conveyor = False
-                self.start_conveyor()
             time.sleep(0.5)
             event.accept()
         else:
