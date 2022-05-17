@@ -62,6 +62,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         ## Auto button
         self.startAuto_btn.clicked.connect(self.start_auto)
         self.stopAuto_btn.clicked.connect(self.stop_auto)
+        self.pauseAuto_btn.clicked.connect(self.pause)
+        self.resetOffset.clicked.connect(self.reset_offset)
 
         ## Adjust Confidence and IoU Threshold
         self.confSpinBox.valueChanged.connect(lambda x: self.changeCam_config(x, 'confSpinBox'))
@@ -94,31 +96,27 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     ##########  Connection, Basic and Machine Controller   #########
     ################################################################
     def get_speed(self):
-        self.thread1.v = float(self.r_speed.text())
+        self.thread1.v = int(self.r_speed.text())
+        self.thread1.r.writeDouble(1, self.thread1.v)
 
     def connect(self):
-        self.statusbar.showMessage("Connected...")
         self.status_label.setText("Connected")
         self.thread1.r.UDP_IP = str(self.ipAddress.text())
         self.thread1.r.UDP_PORT = int(self.portAddress.text())
 
     def stop_manual(self):
-        self.statusbar.showMessage("Stop and go home...")
         self.go_home()
         self.thread1.r.servoOFF()
         self.servoOn_btn.setText("ServoOn")
 
     def go_home(self):
-        self.statusbar.showMessage("Go home...")
         self.thread1.r.Write_Robot_XYZ(xc, yc, zc)
 
     def servo_on(self):
         if (self.servoOn_btn.text() == "ServoOn"):
-            self.statusbar.showMessage("Turn servo on...")
             self.thread1.r.servoON()
             self.servoOn_btn.setText("ServoOff")
         else:
-            self.statusbar.showMessage("Turn servo off...")
             self.thread1.r.servoOFF()
             self.servoOn_btn.setText("ServoOn")
 
@@ -225,10 +223,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         rx = self.tableWidgetPoints.item(row, 3).text()
         ry = self.tableWidgetPoints.item(row, 4).text()
         rz = self.tableWidgetPoints.item(row, 5).text()
-        # print(x, y, z, rx, ry, rz)
         self.thread1.r.Write_Robot_XYZ(x, y, z, rx, ry, rz)
 
-    ## In progress
     def playback(self): 
         for row in range(self.tableWidgetPoints.rowCount()):
             x = self.tableWidgetPoints.item(row, 0).text()
@@ -249,9 +245,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.servoOn_btn.setText("ServoOff")
 
     def stop_auto(self):
-        # self.thread1.r.writeByte(5, 1)
-        # self.thread1.r.writeByte(6, 1)
-        # self.thread1.r.writeByte(1, 1)
         self.thread1.auto_run = False
         self.thread1.quit()
         self.thread1.wait(50)
@@ -259,7 +252,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.thread1.r.CheckToolOff()
         self.thread1.r.servoOFF()
         self.servoOn_btn.setText("ServoOn")
-        self.statusbar.showMessage("Stop and go home...")
+
+    def pause(self):
+        if (self.pauseAuto_btn.text() == "Pause"):
+            self.pauseAuto_btn.setText("Continue")
+            self.thread1.pause = True
+            self.thread1.XYZ_obj = []
+        else:
+            self.pauseAuto_btn.setText("Pause")
+            self.thread1.pause = False
+
+    def reset_offset(self):
+        self.thread1.offset = [0, 0, 0, 0, 0, 0]
 
     def start_capture(self):
         self.thread1.change_pixmap_signal.connect(self.update_image)
@@ -268,8 +272,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.thread2 = threading.Thread(target=self.thread1.camera_run)
         self.thread2.setDaemon(True)
         self.thread2.start()
-
-        self.statusbar.showMessage("Start capture...")
 
 
     def stop_capture(self):
@@ -281,14 +283,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.thread1.camera.pipeline.stop()
             time.sleep(1)
             self.update_image(np.zeros([480,640,3],dtype=np.uint8))
-            self.statusbar.showMessage("Stop capture...")
 
     def detect(self):
         self.thread1.camera.detect_flag = self.detect_box.isChecked()
-        if (self.detect_box.isChecked()):
-            self.statusbar.showMessage("Detecting...")
-        else:
-            self.statusbar.showMessage("Stop detecting...")
 
     def changeCam_config(self, x, detect_flag):
         if detect_flag == 'confSpinBox':
@@ -303,7 +300,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.thread1.camera.model.iou = x/100
         else:
             pass
-        self.statusbar.showMessage("Changed model configuration...")
 
     def change_model(self):
         self.model_type = self.comboBox.currentText()
@@ -313,8 +309,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.iouSpinBox.setProperty("value", 0.45)
         self.iouSlider.setProperty("value", 45)
         
-        self.statusbar.showMessage("Changed model...")
-
 
     def show_fps(self, fps):
         if self.fps_box.isChecked():
@@ -331,8 +325,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                         "Are you sure want to stop process?",
                                         QMessageBox.Yes | QMessageBox.No)
         if close == QMessageBox.Yes:
-            self.stop_auto()
-            time.sleep(0.5)
+            # self.stop_auto()
+            # time.sleep(0.5)
+            self.thread1.r.servoOFF()
             event.accept()
         else:
             event.ignore()

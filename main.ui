@@ -74,7 +74,7 @@
          <x>10</x>
          <y>30</y>
          <width>331</width>
-         <height>291</height>
+         <height>302</height>
         </rect>
        </property>
        <property name="font">
@@ -1810,7 +1810,7 @@ selection-background-color: #282828;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>250</y>
+        <y>280</y>
         <width>371</width>
         <height>401</height>
        </rect>
@@ -2067,7 +2067,7 @@ selection-background-color: #282828;
         <x>10</x>
         <y>30</y>
         <width>371</width>
-        <height>91</height>
+        <height>121</height>
        </rect>
       </property>
       <property name="font">
@@ -2079,39 +2079,61 @@ selection-background-color: #282828;
       <property name="title">
        <string>Auto Control</string>
       </property>
-      <widget class="QWidget" name="horizontalLayoutWidget_2">
+      <widget class="QWidget" name="verticalLayoutWidget_8">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>30</y>
          <width>351</width>
-         <height>51</height>
+         <height>77</height>
         </rect>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_37">
+       <layout class="QVBoxLayout" name="verticalLayout_7">
         <item>
-         <widget class="QPushButton" name="startAuto_btn">
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Start Auto</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_37">
+          <item>
+           <widget class="QPushButton" name="startAuto_btn">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Start Auto</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="stopAuto_btn">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Stop Auto</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QPushButton" name="stopAuto_btn">
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Stop Auto</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_28">
+          <item>
+           <widget class="QPushButton" name="pauseAuto_btn">
+            <property name="text">
+             <string>Pause</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="resetOffset">
+            <property name="text">
+             <string>Reset Offset</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -2120,7 +2142,7 @@ selection-background-color: #282828;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>130</y>
+        <y>160</y>
         <width>371</width>
         <height>111</height>
        </rect>
@@ -2146,7 +2168,7 @@ selection-background-color: #282828;
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_27">
           <property name="spacing">
-           <number>50</number>
+           <number>10</number>
           </property>
           <item>
            <widget class="QLabel" name="label_11">
@@ -2156,7 +2178,7 @@ selection-background-color: #282828;
              </font>
             </property>
             <property name="text">
-             <string>Robot Speed</string>
+             <string>Robot Speed (0.1 mm/s)</string>
             </property>
            </widget>
           </item>
@@ -2168,7 +2190,7 @@ selection-background-color: #282828;
              </font>
             </property>
             <property name="text">
-             <string>200</string>
+             <string>2000</string>
             </property>
            </widget>
           </item>

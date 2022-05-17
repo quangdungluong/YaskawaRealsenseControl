@@ -41,7 +41,7 @@ class RobotControl:
         """
         data = bytes.fromhex('59 45 52 43 20 00 01 00 03 01 00 0F 00 00 00 00 39 39 39 39 39 39 39 39 7A 00') + self.to_hex16(index) + bytes.fromhex('01 10 00 00') + self.to_hex8(value)
         self.sock.sendto(data, (self.UDP_IP, self.UDP_PORT))
-        time.sleep(0.1)
+        # time.sleep(0.1)
 
     def ReadByte(self, index):
         """
@@ -297,5 +297,17 @@ class RobotControl:
             '00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00')
         self.sock.sendto(data, (self.UDP_IP, self.UDP_PORT))
 
+    def writeDouble(self, index, value):
+        """
+        Write value to byte
+        """
+        data = bytes.fromhex('59 45 52 43 20 00 04 00 03 01 00 0F 00 00 00 00 39 39 39 39 39 39 39 39 7C 00') + self.to_hex16(index) + bytes.fromhex('01 10 00 00') + self.to_hex32(value)
+        self.sock.sendto(data, (self.UDP_IP, self.UDP_PORT))
+        time.sleep(0.1)
+
 # Home position 1
 xc = "185.0000"; yc = "-0.0040"; zc = "125.0000"; rx = "180.0000"; ry = "0.0000"; rz = "0.0000"; v_r = "500"
+x_idle = "136.0000"; y_idle = "0.0000"; z_idle = "125.0000" 
+r = RobotControl()
+# r.writeByte(1, 50)
+r.writeDouble(1, 1700)

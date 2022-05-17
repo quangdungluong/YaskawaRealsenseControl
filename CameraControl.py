@@ -43,16 +43,18 @@ class CameraControl:
                 center_z = depth_frame.get_distance(int(center_x), int(center_y))
                 d['class'] = row['class']
                 d['center_x'], d['center_y'], d['height'] = self.convert_to_realworld(center_x, center_y, center_z)
-
                 ## TEMPORARY ##
-                d['height'] = "-65.5"
+                d['height'] = "-65.3"
                 ###############
 
                 ## Calculate 2d orientation ##
-                img = color_image[int(row['ymin']-10):int(row['ymax']+10), int(row['xmin']-10):int(row['xmax']+10)]
-                d['rz'] = str(-estimate_angle(img[:, :, [2, 1, 0]]))
+                img = color_image[int(row['ymin']-5):int(row['ymax']+5), int(row['xmin']-5):int(row['xmax']+5)]
+                angle, _ = estimate_angle(img[:, :, [2, 1, 0]])
+                # d['rz'] = str(-estimate_angle(img[:, :, [2, 1, 0]]))
+                d['rz'] = str(-angle)
                 ##############################
                 result_dict.append(d)        
+                break
 
             result = pred.render()[0]
             self.fps = f"{1/(time.time() - start_time):.0f}"
@@ -65,12 +67,14 @@ class CameraControl:
     def convert_to_realworld(self, x, y, z):
         x, y, z = rs.rs2_deproject_pixel_to_point(self.cam_intrinsic, [x, y], z)
         coord_mat = [[x], [y], [z], [1]]
-        calibration_mat = [[-0.06414223941,  0.9979230425,  -0.005947640776,  0.3180929458],
-                    [0.9979403731,  0.06413578406,  -0.001270011597,  -0.03084779342],
-                    [-0.0008859172322,  -0.006016852243,  -0.9999815061,  0.3921178095],
-                    [0,  0,  0,  1]]
-
-        a = np.dot(calibration_mat, coord_mat)
-        # convert to mm
-        a[2][0] = -0.062
+        # calibration matrix
+        calibration_mat = [[-0.04690637476,  0.9984116247,  -0.03120928807,  0.2367441775],
+            [0.9985854364,  0.04765189589,  0.02358862143,  -0.04215407399],
+            [0.0250383356,  -0.03005868383,  -0.9992344856,  0.3805782305],
+            [0,  0,  0,  1]]
+        s = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0.073], [0, 0, 0, 1]]
+        # a = np.dot(calibration_mat, coord_mat)
+        a = np.dot(np.dot(calibration_mat, s), coord_mat)
+        if a[2][0]*1000 > 0:
+            a[2][0] = -0.066
         return str(a[0][0]*1000), str(a[1][0]*1000), str(a[2][0]*1000)
