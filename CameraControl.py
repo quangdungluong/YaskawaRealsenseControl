@@ -26,7 +26,10 @@ class CameraControl:
         align_to = rs.stream.color
         self.align = rs.align(align_to)
         self.cam_intrinsic = None       
-    
+
+        ### Matrix s ###
+        self.s = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0.0745], [0, 0, 0, 1]]
+
     def process(self, color_image, depth_frame):
         """
         Process image and extract real world coordinate of objects
@@ -44,7 +47,7 @@ class CameraControl:
                 d['class'] = row['class']
                 d['center_x'], d['center_y'], d['height'] = self.convert_to_realworld(center_x, center_y, center_z)
                 ## TEMPORARY ##
-                d['height'] = "-65.3"
+                # d['height'] = "-65.3"
                 ###############
 
                 ## Calculate 2d orientation ##
@@ -72,9 +75,9 @@ class CameraControl:
             [0.9985854364,  0.04765189589,  0.02358862143,  -0.04215407399],
             [0.0250383356,  -0.03005868383,  -0.9992344856,  0.3805782305],
             [0,  0,  0,  1]]
-        s = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0.073], [0, 0, 0, 1]]
+        s = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0.0745], [0, 0, 0, 1]]
         # a = np.dot(calibration_mat, coord_mat)
-        a = np.dot(np.dot(calibration_mat, s), coord_mat)
+        a = np.dot(np.dot(calibration_mat, self.s), coord_mat)
         if a[2][0]*1000 > 0:
             a[2][0] = -0.066
         return str(a[0][0]*1000), str(a[1][0]*1000), str(a[2][0]*1000)

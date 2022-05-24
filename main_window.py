@@ -98,6 +98,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def get_speed(self):
         self.thread1.v = int(self.r_speed.text())
         self.thread1.r.writeDouble(1, self.thread1.v)
+        if self.thread1.v <= 1000:
+            self.thread1.delay_t = 5.3
+            self.thread1.camera.s = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0.0735], [0, 0, 0, 1]]
+        elif self.thread1.v <= 1500:
+            self.thread1.delay_t = 4.8
+            self.thread1.camera.s = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0.0735], [0, 0, 0, 1]]
+        elif self.thread1.v <= 2000:
+            self.thread1.delay_t = 4.3
+            self.thread1.camera.s = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0.075], [0, 0, 0, 1]]
 
     def connect(self):
         self.status_label.setText("Connected")
@@ -245,12 +254,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.servoOn_btn.setText("ServoOff")
 
     def stop_auto(self):
-        self.thread1.auto_run = False
-        self.thread1.quit()
-        self.thread1.wait(50)
-        self.go_home()
-        self.thread1.r.CheckToolOff()
+        # self.thread1.auto_run = False
+        # self.thread1.quit()
+        # self.thread1.wait(50)
+        # self.go_home()
         self.thread1.r.servoOFF()
+        self.thread1.r.CheckToolOff()
         self.servoOn_btn.setText("ServoOn")
 
     def pause(self):
@@ -304,8 +313,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def change_model(self):
         self.model_type = self.comboBox.currentText()
         self.thread1.camera.weights = "./model/%s" % self.model_type
-        self.confSpinBox.setProperty("value", 0.25)
-        self.confSlider.setProperty("value", 25)
+        self.confSpinBox.setProperty("value", 0.7)
+        self.confSlider.setProperty("value", 70)
         self.iouSpinBox.setProperty("value", 0.45)
         self.iouSlider.setProperty("value", 45)
         
@@ -325,8 +334,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                         "Are you sure want to stop process?",
                                         QMessageBox.Yes | QMessageBox.No)
         if close == QMessageBox.Yes:
-            # self.stop_auto()
-            # time.sleep(0.5)
             self.thread1.r.servoOFF()
             event.accept()
         else:

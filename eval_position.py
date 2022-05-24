@@ -5,7 +5,7 @@ import torch.backends.cudnn as cudnn
 from estimate2d import *
 
 model = torch.hub.load('E:/yolov5', 'custom', path='./model/best_n.pt', source='local')
-model.conf = 0.7
+model.conf = 0.6
 model.iou = 0.45
 
 
@@ -39,7 +39,7 @@ def process(intrs, color_image, depth_frame):
                 d['name'] = row['name']
                 d['center_x'], d['center_y'], d['height'] = convert_to_realworld(intrs, center_x, center_y, center_z)
                 d['center_z'] = center_z
-                img = color_image[int(row['ymin']-5):int(row['ymax']+5), int(row['xmin']-5):int(row['xmax']+5)]
+                img = color_image[int(row['ymin']-3):int(row['ymax']+3), int(row['xmin']-3):int(row['xmax']+3)]
                 angle, _ = estimate_angle(img[:, :, [2, 1, 0]])
                 d['rz'] = str(-angle)
                 result_dict.append(d)                

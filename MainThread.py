@@ -31,13 +31,15 @@ class Main_loop(QThread):
         self.r_y = yc
         self.r_z = zc
         self.pause = False
+        self.delay_t = 4.32
 
     def run(self):
         self.r.writeDouble(1, self.v)
         self.r.writeByte(5, 0)
         self.auto_run = True
         self.r.servoON()
-        self.r.Write_Robot_XYZ(xc, yc, zc)
+        # self.r.Write_Robot_XYZ(xc, yc, zc)
+        self.r.Write_Robot_XYZ(x_idle, y_idle, "20")
         self.r.mainJobStart()
 
         while True:
@@ -48,13 +50,14 @@ class Main_loop(QThread):
                 # x, y, z = self.estimatePos(xc, yc, zc, x, y, z)
                 x, y, z = self.estimatePos(x_idle, y_idle, zc, x, y, z)
                 # if (float(y) > -190 and float(y) < 110):
-                if (float(y) > -100 and float(y) < 120 and float(x) > 200 and float(x) < 290):
+                if (float(y) > -140 and float(y) < 120 and float(x) > 200 and float(x) < 290):
                     dest_x, dest_y, dest_z = self.destXYZ_obj[id]
+                    dest_z = "-20"
                     offset = self.offset[id]
                     dest_x = str(float(dest_x) - 30*(offset%3))
                     dest_y = str(float(dest_y) + 30*(offset//3))
                     dest_z = str(float(dest_z) + 25*(offset//6))
-                    self.offset[id] += 1
+                    # self.offset[id] += 1
                     print(x, y, z)
 
                     self.r.writePosition(30, x, y, z)
@@ -66,7 +69,8 @@ class Main_loop(QThread):
                     self.r.writePosition(35, "156", "-90", "20")
                     self.r.writeByte(5, 1)
                     self.r_z = "20"
-                    time.sleep(5.4)
+                    # time.sleep(4.8)
+                    time.sleep(self.delay_t)
                     self.picking = False
                 else:
                     self.picking = False
@@ -88,6 +92,7 @@ class Main_loop(QThread):
         if (self.camera.cur_weights != self.camera.weights):
             self.camera.cur_weights = self.camera.weights
             self.camera.model = torch.hub.load('E:/yolov5', 'custom', path=self.camera.cur_weights, source='local')
+            self.camera.model.conf = 0.7
 
         while True:
             frames = self.camera.pipeline.wait_for_frames()
